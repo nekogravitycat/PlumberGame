@@ -1,17 +1,12 @@
 /************************************
 File: map.h
-Author: Ayr
+Author:
 Create Date: 2023/04/18
-Editor: Ayr, MENG-HAN CHEN
+Editor: Ayr
 Update Date: 2023/04/19
 Description:
 ************************************/
-
-#pragma once
-
 #include <iostream>
-#include<random>
-#include<time.h>
 #include <vector>
 #include <cmath>
 #include "Pipe.h"
@@ -20,238 +15,165 @@ Description:
 
 using namespace std;
 
+
 class Map
 {
     private:
         vector<vector<Pipe>> data;
         vector<Position> route;
         Position start, end;
-        int col, row;
-        int direction;
+        int col = 0, row = 0;
+        int direction = -1;   //-1:up, 1:down
 
     public:
-        // default constructor
-        Map(void)
+        void setsize(int input_col, int input_row)
         {
-            srand(time(NULL));
-            col = 0;
-            row = 0;
-            start.posX = 0;
-            start.posY = 0;
-            end.posX = 0;
-            end.posY = 0;
-            direction = -1; //-1:up, 1:down
+            col = input_col;
+            row = input_row;
         }
-
-        // setting constructor
-        Map(int inputCol, int inputRow)
+        void setstart()
         {
-            srand(time(0));
-            col = inputCol;
-            row = inputRow;
-            start.posX = 0;
-            start.posY = rand() % row;
-            end.posX = col - 1;
-            end.posY = rand() % row;
-
-            while(abs(start.posY - end.posY) < col / 2)
-            {
-                start.posY = rand() % row;
-                end.posY = rand() % row;
-            }
-
-            direction = -1; //-1:up, 1:down
+            start.pos_x = 0;
+            start.pos_y = rand() % row;
         }
-
-        void setSize(int inputCol, int inputRow)
+        void setstart(int input_x, int input_y)
         {
-            col = inputCol;
-            row = inputRow;
+            start.pos_x = input_x;
+            start.pos_y = input_y;
         }
-
-        void setStart()
+        void setend()
         {
-            start.posX = 0;
-            start.posY = rand() % row;
+            end.pos_x = col - 1;
+            end.pos_y = rand() % row;
         }
-
-        void setStart(int inputX, int inputY)
+        void setend(int input_x, int input_y)
         {
-            start.posX = inputX;
-            start.posY = inputY;
+            end.pos_x = input_x;
+            end.pos_y = input_y;
         }
-        
-        void setEnd()
+        int getcol()
         {
-            end.posX = col - 1;
-            end.posY = rand() % row;
+            return col;
         }
-        
-        void setEnd(int inputX, int inputY)
+        int getrow()
         {
-            end.posX = inputX;
-            end.posY = inputY;
+            return row;
         }
-
-        void randMap()
+        Pipe getdata(int input_x, int input_y)
+        {
+            return data[input_x][input_y];
+        }
+        void randmap()
         {
             for (int i = 0; i < col; i++)
             {
                 vector<Pipe> temp;
-
                 for (int j = 0; j < row; j++)
                 {
                     Pipe x;
-                    pShape psh = CROSS;
-                    int randNum = rand() % 4;
-
-                    switch(randNum)
+                    pshape psh = CROSS;
+                    int rand_num = rand() % 4;
+                    switch(rand_num)
                     {
-                        case 0: // +
+                        case 0:
                             psh = CROSS;
                             break;
-                        case 1: // |
+                        case 1:
                             psh = STRA;
                             break;
-                        case 2: // T
+                        case 2:
                             psh= TEE;
                             break;
-                        case 3: // L
+                        case 3:
                             psh = ELBOW;
                             break;
                         default:
                             break;
                     }
-
                     x.SetShape(psh);
                     x.SetRotation(rand() % 4);
                     temp.push_back(x);
                 }
-
                 data.push_back(temp);
             }
         }
-
         void randroute()
         {
-            int deltaX = 0, deltaY = 0, randNum = 0, moveSize = 0;
-            deltaX = end.posX - start.posX;
-            deltaY = end.posY - start.posY;
-            vector<Position> move;
-            Position choosen, current;
-
-            if(deltaY > 0) // go down
+            Position current = start;
+            if(start.pos_y < end.pos_y)
             {
-                // means move rights
-                choosen.posX = 1;
-                choosen.posY = 0;
-                // end
-
-                // deltaX times move right
-                for(int i = 0; i < deltaX; i++)
+                direction = 1;
+            }
+            else
+            {
+                direction = -1;
+            }
+            route.push_back(start);
+            for (int i = 0;;i++)
+            {
+                int rand_num = rand() % 2;
+                switch(rand_num)
                 {
-                    move.push_back(choosen);
+                    case 0:
+                        if(current.pos_x != end.pos_x)
+                        {
+                            current.pos_x = current.pos_x + 1;
+                        }
+                        else
+                        {
+                            current.pos_y = current.pos_y + direction;
+                        }
+                        break;
+                    case 1:
+                        if(current.pos_y != end.pos_y)
+                        {
+                            current.pos_y = current.pos_y + direction;
+                        }
+                        else
+                        {
+                            current.pos_x = current.pos_x + 1;
+                        }
+                        break;
+                    default:
+                        break;
                 }
-                // end
-
-                // means move down
-                choosen.posX = 0;
-                choosen.posY = 1;
-                // end
-
-                // deltaY times move down
-                for(int i = 0; i < deltaY; i++)
+                route.push_back(current);
+                //cout << current.pos_x << "  " << end.pos_x << "  " << current.pos_y << "  " << end.pos_y << endl;
+                if (current == end)
                 {
-                    move.push_back(choosen);
+                    break;
                 }
-                // end
             }
-            else if(deltaY == 0)
+            /*for (int i = 0; i < route.size(); i++)
             {
-                // means move rights
-                choosen.posX = 1;
-                choosen.posY = 0;
-                // end
-
-                // deltaX times move right
-                for(int i = 0; i < deltaX; i++)
-                {
-                    move.push_back(choosen);
-                }
-                // end
-            }
-            else // go up
+                data[route[i].pos_y][route[i].pos_x].setcolor(176);
+            }*/
+            cout << route.size() << endl;
+            int forward = 0;
+            for (int i = 2; i < route.size(); i++)
             {
-                // means move rights
-                choosen.posX = 1;
-                choosen.posY = 0;
-                // end
-
-                // deltaX times move right
-                for(int i = 0; i < deltaX; i++)
-                {
-                    move.push_back(choosen);
-                }
-                // end
-
-                // means move down
-                choosen.posX = 0;
-                choosen.posY = -1;
-                // end
-
-                // deltaY times move down
-                for(int i = 0; i < (0 - deltaY); i++)
-                {
-                    move.push_back(choosen);
-                }
-                // end
-            }
-            
-            // suffle the order
-            for(int i = 0; i < move.size(); i++)
-            {
-                randNum = rand() % move.size();
-                swap(move[i], move[randNum]);
-            }
-            
-            current.posY = start.posY;
-            current.posX = start.posX;
-
-            // push data back to route
-            for(int i = 0; i < move.size(); i++)
-            {
-                data[current.posY][current.posX].setcolor(195);
-                current.posY = current.posY + move[i].posY;
-                current.posX = current.posX + move[i].posX;
-            }
-
-            data[current.posY][current.posX].setcolor(195);
-
-            for (int i = 0; i < route.size(); i++)
-            {
-                data[route[i].posY][route[i].posX].setcolor(176);
-            }
-
-            for (int i = 2; i < route.size() / 2; i++)
-            {
-                int forward = 0; // !
                 int mid = (forward + i) / 2;
+                cout << forward << " " << i << " " << mid << endl;
                 Position judge = route[forward] - route[i];
-                pShape psh;
+                forward = forward + 1;
+                pshape psh;
+                int color = 0;
                 int rnad_num = rand() % 3;
-
-                if (judge.posX == 0 || judge.posY == 0)
+                if (judge.pos_x == 0 || judge.pos_y == 0)
                 {
                     switch(rnad_num)
                     {
                         case 0:
-                            psh = CROSS; // +
+                            psh = CROSS;
+                            color = 176;
                             break;
                         case 1:
-                            psh = STRA; // |
+                            psh = STRA;
+                            color = 225;
                             break;
                         case 2:
-                            psh = TEE; // T
+                            psh = TEE;
+                            color = 144;
                             break;
                     }
                 }
@@ -260,21 +182,23 @@ class Map
                     switch(rnad_num)
                     {
                         case 0:
-                            psh = CROSS; // |
+                            psh = CROSS;
+                            color = 176;
                             break;
                         case 1:
-                            psh = TEE; // T
+                            psh = TEE;
+                            color = 144;
                             break;
                         case 2:
-                            psh = ELBOW; // L
+                            psh = ELBOW;
+                            color = 127;
                             break;
                     }
                 }
-
-                data[route[mid].posY][route[mid].posX].SetShape(psh);
+                data[route[mid].pos_y][route[mid].pos_x].SetShape(psh);
+                data[route[mid].pos_y][route[mid].pos_x].setcolor(color);
             }
         }
-
         void printdata() //test
         {
             for (int i = 0; i < row;i++)
@@ -282,7 +206,6 @@ class Map
                 for (int j = 0; j < col;j++)
                 {
                     SetColor(data[i][j].GetColor());
-
                     switch (data[i][j].GetShape())
                     {
                         case CROSS:
@@ -297,13 +220,9 @@ class Map
                         case ELBOW:
                             cout << "E";
                             break;
-                        default:
-                            break;
                     }
                 }
-                SetColor(7);
                 cout << endl;
             }
-            SetColor(7);
         }
 };
