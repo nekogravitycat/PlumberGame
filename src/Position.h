@@ -6,31 +6,32 @@ Editor: Ayr
 Update Date: 2023/04/19
 Description:
 ************************************/
+
 class Position
 {
     private:
-
     public:
-        int pos_x = 0;
-        int pos_y = 0;
+        int posX = 0;
+        int posY = 0;
+        
         const Position operator+(const Position& input)
         {
             Position output;
-            output.pos_x = pos_x + input.pos_x;
-            output.pos_y = pos_y + input.pos_y;
+            output.posX = posX + input.posX;
+            output.posY = posY + input.posY;
             return output;
         }
         const Position operator-(const Position& input)
         {
             Position output;
-            output.pos_x = pos_x - input.pos_x;
-            output.pos_y = pos_y - input.pos_y;
+            output.posX = posX - input.posX;
+            output.posY = posY - input.posY;
             return output;
         }
         bool operator==(const Position& input)
         {
             bool output = false;
-            if(pos_x == input.pos_x && pos_y == input.pos_y)
+            if(posX == input.posX && posY == input.posY)
             {
                 output = true;
             }

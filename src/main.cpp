@@ -1,11 +1,9 @@
-#include"Map.h"
+#include"Game.h"
 
 using namespace std;
 
 int main(void)
 {
-    Map pipeGame(10, 10);
-    pipeGame.randMap();
-    pipeGame.randroute();
-    pipeGame.printdata();
+    Game mainGame;
+    mainGame.startGame();
 }
