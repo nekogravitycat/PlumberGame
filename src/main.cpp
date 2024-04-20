@@ -1,8 +1,11 @@
-#include "MyApp.h"
+#include"Map.h"
 
-int main() {
-  MyApp app;
-  app.Run();
+using namespace std;
 
-  return 0;
+int main(void)
+{
+    Map pipeGame(10, 10);
+    pipeGame.randMap();
+    pipeGame.randroute();
+    pipeGame.printdata();
 }
