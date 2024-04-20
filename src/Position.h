@@ -13,7 +13,7 @@ class Position
     public:
         int posX = 0;
         int posY = 0;
-        
+
         const Position operator+(const Position& input)
         {
             Position output;
