@@ -13,8 +13,7 @@ if (gBoard) {
             img.src = `./image/straight.png`;
             square.appendChild(img);
             img.addEventListener('click', function () {
-                // 當點擊圖片時，將其旋轉90度
-                const currentRotation = parseFloat(img.style.transform.replace('rotate(', '').replace('deg)', '')) || 0;
+                const currentRotation = parseFloat(img.style.transform.replace('rotate(', '').replace('deg)', ''));
                 img.style.transform = `rotate(${currentRotation + 90}deg)`;
             });
             gBoard.appendChild(square);
