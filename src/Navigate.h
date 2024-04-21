@@ -39,6 +39,12 @@ class Navigate
             originalMap = input_map;
         }
 
+        void update()
+        {
+            control.clear();
+            create();
+        }
+
         void create()
         {
             for (int i = 0; i < originalMap.getRow() * 3; i++)

@@ -10,7 +10,6 @@ Description:
 #pragma once
 
 #include <iostream>
-//#include<random>
 #include<time.h>
 #include <vector>
 #include <cmath>
@@ -25,12 +24,15 @@ class Map
     public:
         // just execute this function it will setup Map and Route for you
         void startOperate(void)
-        {
+        {   
             randMap();
             randRoute();
+            // set default pipe you select
+            data[route[selection].posY][route[selection].posX].setcolor(174);
+            // finish setting
         }
 
-        // default constructor
+        // default constructor, it will set up random seed, and ohter data set to zero
         Map(void)
         {
             srand(time(NULL));
@@ -38,9 +40,11 @@ class Map
             row = 0;
             start.posX = 0;
             start.posY = 0;
+            selection = 0;
         }
 
-        // setting constructor
+        // setting constructor, with input columns and rows, set up random seed also
+        // setup starting position
         Map(int inputCol, int inputRow)
         {
             srand(time(0));
@@ -48,29 +52,29 @@ class Map
             row = inputRow;
             start.posX = 0;
             start.posY = rand() % row;
-
-            /*while(abs(start.posY - end.posY) < col / 2)
-            {
-                start.posY = rand() % row;
-                end.posY = rand() % row;
-            }*/
+            selection = 0;
         }
 
+        // get column
         int getColumn(void)
         {
             return col;
         }
 
+        // get row
         int getRow(void)
         {
             return row;
         }
 
+        // return single pipe data, with inputX and inputY to choose which x and y
         Pipe getPipeData(int inputX, int inputY)
         {
             return data[inputY][inputX];
         }
 
+        // if we do not setup col and row when we create Map object, we setup here
+        // it also setup starting position
         void setSize(int inputCol, int inputRow)
         {
             srand(time(0));
@@ -86,19 +90,22 @@ class Map
             }*/
         }
 
+        // set startPosition with random
         void setStart()
         {
             start.posX = 0;
             start.posY = rand() % row;
         }
 
+        // set startPosition with inputX and inputY, no random here
         void setStart(int inputX, int inputY)
         {
             start.posX = inputX;
             start.posY = inputY;
         }
+
         // for test
-        void printdata()
+        void printData(void)
         {
             for (int i = 0; i < row;i++)
             {
@@ -125,47 +132,76 @@ class Map
                     }
                 }
 
-                SetColor(7);
+                SetColor(7); // reset color for endl
                 cout << endl;
             }
+        }
+
+        int& getSelection(void)
+        {
+            return selection;
+        }
+
+        void setSelection(int inputSelect)
+        {
+            data[route[selection].posY][route[selection].posX].setcolor(176);
+            data[start.posY][start.posX].setcolor(207); // start position
+            data[route[route.size() - 1].posY][route[route.size() - 1].posX].setcolor(207); // end position
+            selection = inputSelect;
+            data[route[selection].posY][route[selection].posX].setcolor(237);
+        }
+
+        int getRouteSize(void)
+        {
+            return route.size();
         }
 
     private:
         vector<vector<Pipe>> data;  //Record map information
         vector<Position> route;     //Record the correct route Position
-        Position start;
-        vector<Position> node;
-        int col, row;
+        Position start; // Record start position
+        int selection; // index of route
+        vector<Position> node; // Record node position for generate correct route
+        int col, row; // map size
 
+        // it random route by setting random nodes between start and end
         void randRoute(void)
         {
-            int node_quantity = col / 3;
-
-            node.push_back(start);
+            int nodeQuantity = col / 3; // setup how many nodes
+            node.push_back(start); // first node is starting position
             route.push_back(start);
-            Position temp;
-            for (int i = 1; i < node_quantity; i++)
+            Position temp; // for temp store position data
+
+            // i start with one, because we have already set start for our first node
+            for (int i = 1; i < nodeQuantity; i++)
             {
-                while(1)
+                while(true)
                 {
                     temp.posX = i * 3;
-                    temp.posY = rand() % row;
-                    if (abs(node[i].posY - temp.posY) >= 3)
+                    temp.posY = rand() % row; // random choose y for node
+                    
+                    // make sure it have enough deltaY between two node
+                    if (abs(node[i - 1].posY - temp.posY) >= 3)
                     {
                         node.push_back(temp);
                         break;
                     }
                 }
             }
+
             if (col / 3 != 0)
             {
                 temp.posX = col - 1;
-                temp.posY = rand() % row; //////////////////
+                temp.posY = rand() % row;
                 node.push_back(temp);
             }
+
             int direction = 1;    //1:down  -1:up
+
+            // loop with node to setup route between two node
             for (int i = 0; i < node.size() - 1; i++)
-            {
+            {   
+                // to consider up or down
                 if (node[i].posY < node[i + 1].posY)
                 {
                     direction = 1;
@@ -174,40 +210,52 @@ class Map
                 {
                     direction = -1;
                 }
+
                 Position choosen, current = node[i];
                 Position delta = node[i + 1] - node[i];
                 delta.posY = abs(delta.posY);
                 vector<Position> move;
+
+                // setup how many columns we need to move
                 for (int i = 0; i < delta.posX; i++)
                 {
                     choosen.posX = 1;
                     choosen.posY = 0;
                     move.push_back(choosen);
                 }
+
+                // setup how many rows we need to move
                 for (int i = 0; i < delta.posY; i++)
                 {
                     choosen.posX = 0;
                     choosen.posY = 1 * direction;
                     move.push_back(choosen);
                 }
+
+                // shuffle the move's order
                 for (int i = 1; i < move.size(); i++)
                 {
                     int randNum = rand() % (move.size() - 1) + 1;
                     swap(move[i], move[randNum]);
                 }
+
+                // start moving
                 for (int i = 0; i < move.size(); i++)
                 {
                     current = current + move[i];
                     route.push_back(current);
                 }
             }
+
             int forward = -1;
-            cout << start.posX << endl;
+
+            // check if the route can successfully reach the end, setup color of map
             for (int i = 1; i < route.size() + 1; i++)
             {
                 int color = 176;
                 int mid = 0;
                 Position judge;
+
                 if (forward == -1)
                 {
                     mid = 0;
@@ -227,13 +275,14 @@ class Map
                     mid = (forward + i) / 2;
                     judge = route[forward] - route[i];
                 }
+
                 forward = forward + 1;
                 pShape psh;
-                int rnad_num = rand() % 3;
+                int randNum = rand() % 3;
 
                 if (judge.posX == 0 || judge.posY == 0)
                 {
-                    switch(rnad_num)
+                    switch(randNum)
                     {
                         case 0:
                             psh = CROSS; // +
@@ -248,7 +297,7 @@ class Map
                 }
                 else
                 {
-                    switch(rnad_num)
+                    switch(randNum)
                     {
                         case 0:
                             psh = CROSS; // |
@@ -261,12 +310,13 @@ class Map
                             break;
                     }
                 }
-                cout << route[mid].posY << " " << route[mid].posX << endl;
+
+                // cout << route[mid].posY << " " << route[mid].posX << endl; (For testing!)
+                // set shape and color to it
                 data[route[mid].posY][route[mid].posX].SetShape(psh);
                 data[route[mid].posY][route[mid].posX].setcolor(color);
             }
         }
-
 
         void randMap(void)
         {
@@ -302,6 +352,7 @@ class Map
                     x.SetRotation(rand() % 4);
                     temp.push_back(x);
                 }
+
                 data.push_back(temp);
             }
         }

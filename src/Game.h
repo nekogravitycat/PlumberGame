@@ -1,6 +1,7 @@
 #include"Map.h"
 #include"Navigate.h"
 #include<iostream>
+#include <conio.h> // for _getch()
 
 using namespace std;
 
@@ -16,16 +17,19 @@ class Game
             cin >> inputRows;
             pipeGame.setSize(inputColumns, inputRows);
             pipeGame.startOperate();
-            //pipeGame.printdata();
             extendGraphic.input(pipeGame);
             extendGraphic.create();
-            //system("CLS");
+            system("CLS");
             extendGraphic.print();
+            printInfo();
             // finish setup
-
-            // Start Game
-            //printInfo();
-            // Game end
+            // Game loop
+            
+            while(true)
+            {
+                keyBoard = _getch();
+                updateState();
+            }
         }
 
         // default constructor
@@ -37,22 +41,45 @@ class Game
 
     private:
         int inputColumns, inputRows;
+        char keyBoard;
         Map pipeGame;
         Navigate extendGraphic;
 
-        enum VALID_INPUT
-        {
-            W = 0,
-            A = 1,
-            S = 2,
-            D = 3,
-            ENTER = 4,
-            INVALID,
-        };
-
         void printInfo(void)
         {
-            cout << "W, A, S, D to change which Pipe you want to select" << endl;
-            cout << "Enter to turn Pipe" << endl;
+            cout << "(A) and (D) to change which Pipe you want to select" << endl;
+            cout << "(S) to turn Pipe" << endl;
+        }
+
+        void updateState(void)
+        {         
+            if(keyBoard == 'a') // choose left one
+            {
+                if(pipeGame.getSelection() != 0)
+                {
+                    pipeGame.setSelection(pipeGame.getSelection() - 1);
+                }
+            }
+            else if(keyBoard == 'd')
+            {
+                if(pipeGame.getSelection() != pipeGame.getRouteSize() - 1)
+                {
+                    pipeGame.setSelection(pipeGame.getSelection() + 1);
+                }
+            }
+            else if(keyBoard == 's')
+            {
+                cout << "Turn it! Have not right it" << endl;
+            }
+            else
+            {
+                cout << "Invalid input!" << endl;
+            }
+
+            system("CLS");
+            extendGraphic.input(pipeGame);
+            extendGraphic.update();
+            extendGraphic.print();
+            printInfo();
         }
 };
