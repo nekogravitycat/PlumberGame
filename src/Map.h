@@ -3,13 +3,14 @@ File: map.h
 Author: Ayr
 Create Date: 2023/04/18
 Editor: Ayr, MENG-HAN CHEN
-Update Date: 2023/04/19
+Update Date: 2023/04/21
 Description:
 ************************************/
 
 #pragma once
 
 #include <iostream>
+//#include<random>
 #include<time.h>
 #include <vector>
 #include <cmath>
@@ -21,14 +22,14 @@ using namespace std;
 
 class Map
 {
-    private:
-        vector<vector<Pipe>> data;
-        vector<Position> route;
-        Position start, end;
-        int col, row;
-        int direction;
-
     public:
+        // just execute this function it will setup Map and Route for you
+        void startOperate(void)
+        {
+            randMap();
+            randRoute();
+        }
+
         // default constructor
         Map(void)
         {
@@ -37,9 +38,6 @@ class Map
             row = 0;
             start.posX = 0;
             start.posY = 0;
-            end.posX = 0;
-            end.posY = 0;
-            direction = -1; //-1:up, 1:down
         }
 
         // setting constructor
@@ -50,22 +48,42 @@ class Map
             row = inputRow;
             start.posX = 0;
             start.posY = rand() % row;
-            end.posX = col - 1;
-            end.posY = rand() % row;
 
-            while(abs(start.posY - end.posY) < col / 2)
+            /*while(abs(start.posY - end.posY) < col / 2)
             {
                 start.posY = rand() % row;
                 end.posY = rand() % row;
-            }
+            }*/
+        }
 
-            direction = -1; //-1:up, 1:down
+        int getColumn(void)
+        {
+            return col;
+        }
+
+        int getRow(void)
+        {
+            return row;
+        }
+
+        Pipe getPipeData(int inputX, int inputY)
+        {
+            return data[inputY][inputX];
         }
 
         void setSize(int inputCol, int inputRow)
         {
-            col = inputCol;
-            row = inputRow;
+            srand(time(0));
+            col = inputCol;   //X
+            row = inputRow;   //Y
+            start.posX = 0;
+            start.posY = rand() % row;
+
+            /*while(abs(start.posY - end.posY) < col / 2)
+            {
+                start.posY = rand() % row;
+                end.posY = rand() % row;
+            }*/
         }
 
         void setStart()
@@ -79,37 +97,184 @@ class Map
             start.posX = inputX;
             start.posY = inputY;
         }
-        
-        void setEnd()
+        // for test
+        void printdata()
         {
-            end.posX = col - 1;
-            end.posY = rand() % row;
+            for (int i = 0; i < row;i++)
+            {
+                for (int j = 0; j < col;j++)
+                {
+                    SetColor(data[i][j].GetColor());
+
+                    switch (data[i][j].GetShape())
+                    {
+                        case CROSS:
+                            cout << "C";
+                            break;
+                        case STRA:
+                            cout << "S";
+                            break;
+                        case TEE:
+                            cout << "T";
+                            break;
+                        case ELBOW:
+                            cout << "E";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                SetColor(7);
+                cout << endl;
+            }
         }
-        
-        void setEnd(int inputX, int inputY)
+
+    private:
+        vector<vector<Pipe>> data;
+        vector<Position> route;
+        Position start;
+        vector<Position> node;
+        int col, row;
+
+        void randRoute(void)
         {
-            end.posX = inputX;
-            end.posY = inputY;
+            int node_quantity = col / 3;
+
+            node.push_back(start);
+            route.push_back(start);
+            Position temp;
+            for (int i = 1; i < node_quantity; i++)
+            {
+                while(1)
+                {
+                    temp.posX = i * 3;
+                    temp.posY = rand() % row;
+                    if (abs(node[i].posY - temp.posY) >= 3)
+                    {
+                        node.push_back(temp);
+                        break;
+                    }
+                }
+            }
+            if (col / 3 != 0)
+            {
+                temp.posX = col - 1;
+                temp.posY = rand() % row; //////////////////
+                node.push_back(temp);
+            }
+            int direction = 1;    //1:down  -1:up
+            for (int i = 0; i < node.size() - 1; i++)
+            {
+                if (node[i].posY < node[i + 1].posY)
+                {
+                    direction = 1;
+                }
+                else
+                {
+                    direction = -1;
+                }
+                Position choosen, current = node[i];
+                Position delta = node[i + 1] - node[i];
+                delta.posY = abs(delta.posY);
+                vector<Position> move;
+                for (int i = 0; i < delta.posX; i++)
+                {
+                    choosen.posX = 1;
+                    choosen.posY = 0;
+                    move.push_back(choosen);
+                }
+                for (int i = 0; i < delta.posY; i++)
+                {
+                    choosen.posX = 0;
+                    choosen.posY = 1 * direction;
+                    move.push_back(choosen);
+                }
+                for (int i = 1; i < move.size(); i++)
+                {
+                    int randNum = rand() % (move.size() - 1) + 1;
+                    swap(move[i], move[randNum]);
+                }
+                for (int i = 0; i < move.size(); i++)
+                {
+                    current = current + move[i];
+                    route.push_back(current);
+                }
+            }
+            int forward = -1;
+            cout << start.posX << endl;
+            for (int i = 1; i < route.size() + 1; i++)
+            {
+                int color = 176;
+                int mid = 0;
+                Position judge;
+                if (forward == -1)
+                {
+                    mid = 0;
+                    judge.posX = -1;
+                    judge.posX = route[0].posY;
+                    color = 207;
+                }
+                else if (i == route.size())
+                {
+                    mid = (forward + i) / 2;
+                    judge.posX = route[forward].posX - (route[route.size() - 1].posX + 1);
+                    judge.posX = route[forward].posY - (route[route.size() - 1].posY);
+                    color = 207;
+                }
+                else
+                {
+                    mid = (forward + i) / 2;
+                    judge = route[forward] - route[i];
+                }
+                forward = forward + 1;
+                pShape psh;
+                int rnad_num = rand() % 3;
+
+                if (judge.posX == 0 || judge.posY == 0)
+                {
+                    switch(rnad_num)
+                    {
+                        case 0:
+                            psh = CROSS; // +
+                            break;
+                        case 1:
+                            psh = STRA; // |
+                            break;
+                        case 2:
+                            psh = TEE; // T
+                            break;
+                    }
+                }
+                else
+                {
+                    switch(rnad_num)
+                    {
+                        case 0:
+                            psh = CROSS; // |
+                            break;
+                        case 1:
+                            psh = TEE; // T
+                            break;
+                        case 2:
+                            psh = ELBOW; // L
+                            break;
+                    }
+                }
+                cout << route[mid].posY << " " << route[mid].posX << endl;
+                data[route[mid].posY][route[mid].posX].SetShape(psh);
+                data[route[mid].posY][route[mid].posX].setcolor(color);
+            }
         }
-        int getcol()
+
+
+        void randMap(void)
         {
-            return col;
-        }
-        int getrow()
-        {
-            return row;
-        }
-        Pipe getdata(int input_x, int input_y)
-        {
-            return data[input_x][input_y];
-        }
-        void randMap()
-        {
-            for (int i = 0; i < col; i++)
+            for (int i = 0; i < row; i++)
             {
                 vector<Pipe> temp;
 
-                for (int j = 0; j < row; j++)
+                for (int j = 0; j < col; j++)
                 {
                     Pipe x;
                     pShape psh = CROSS;
@@ -137,142 +302,7 @@ class Map
                     x.SetRotation(rand() % 4);
                     temp.push_back(x);
                 }
-
                 data.push_back(temp);
             }
-        }
-
-        void randroute()
-        {
-            Position current = start;
-            if(start.posY < end.posY)
-            {
-                direction = 1;
-            }
-            else
-            {
-                direction = -1;
-            }
-            route.push_back(start);
-            for (int i = 0;;i++)
-            {
-                int rand_num = rand() % 2;
-                switch(rand_num)
-                {
-                    case 0:
-                        if(current.posX != end.posX)
-                        {
-                            current.posX = current.posX + 1;
-                        }
-                        else
-                        {
-                            current.posY = current.posY + direction;
-                        }
-                        break;
-                    case 1:
-                        if(current.posY != end.posY)
-                        {
-                            current.posY = current.posY + direction;
-                        }
-                        else
-                        {
-                            current.posY = current.posY + 1;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                route.push_back(current);
-                //cout << current.pos_x << "  " << end.pos_x << "  " << current.pos_y << "  " << end.pos_y << endl;
-                if (current == end)
-                {
-                    break;
-                }
-            }
-            /*for (int i = 0; i < route.size(); i++)
-            {
-                data[route[i].pos_y][route[i].pos_x].setcolor(176);
-            }*/
-            int forward = 0;
-            for (int i = 2; i < route.size(); i++)
-            {
-                int mid = (forward + i) / 2;
-                //cout << forward << " " << i << " " << mid << endl;
-                Position judge = route[forward] - route[i];
-                forward = forward + 1;
-                pShape psh;
-                int color = 0;
-                int rnad_num = rand() % 3;
-                if (judge.posX == 0 || judge.posY == 0)
-                {
-                    switch(rnad_num)
-                    {
-                        case 0:
-                            psh = CROSS;
-                            color = 176;
-                            break;
-                        case 1:
-                            psh = STRA;
-                            color = 225;
-                            break;
-                        case 2:
-                            psh = TEE;
-                            color = 144;
-                            break;
-                    }
-                }
-                else
-                {
-                    switch(rnad_num)
-                    {
-                        case 0:
-                            psh = CROSS;
-                            color = 176;
-                            break;
-                        case 1:
-                            psh = TEE;
-                            color = 144;
-                            break;
-                        case 2:
-                            psh = ELBOW;
-                            color = 127;
-                            break;
-                    }
-                }
-                data[route[mid].posY][route[mid].posX].SetShape(psh);
-                data[route[mid].posY][route[mid].posX].setcolor(color);
-            }
-        }
-
-        void printdata() //test
-        {
-            for (int i = 0; i < row;i++)
-            {
-                for (int j = 0; j < col;j++)
-                {
-                    SetColor(data[i][j].GetColor());
-
-                    switch (data[i][j].GetShape())
-                    {
-                        case CROSS:
-                            cout << "C";
-                            break;
-                        case STRA:
-                            cout << "S";
-                            break;
-                        case TEE:
-                            cout << "T";
-                            break;
-                        case ELBOW:
-                            cout << "E";
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                SetColor(7);
-                cout << endl;
-            }
-            SetColor(7);
         }
 };

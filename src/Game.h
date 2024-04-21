@@ -4,7 +4,8 @@
 
 using namespace std;
 
-class Game{
+class Game
+{
     public:
         void startGame(void)
         {
@@ -15,6 +16,7 @@ class Game{
             cin >> inputRows;
             pipeGame.setSize(inputColumns, inputRows);
             pipeGame.startOperate();
+            //pipeGame.printdata();
             extendGraphic.input(pipeGame);
             extendGraphic.create();
             system("CLS");
@@ -22,10 +24,10 @@ class Game{
             // finish setup
 
             // Start Game
-            printInfo();
+            //printInfo();
             // Game end
         }
-        
+
         // default constructor
         Game(void)
         {
