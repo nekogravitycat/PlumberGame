@@ -21,11 +21,25 @@ class Position
             output.posY = posY + input.posY;
             return output;
         }
+        const Position operator+(const int& input)
+        {
+            Position output;
+            output.posX = posX + input;
+            output.posY = posY + input;
+            return output;
+        }
         const Position operator-(const Position& input)
         {
             Position output;
             output.posX = posX - input.posX;
             output.posY = posY - input.posY;
+            return output;
+        }
+        const Position operator*(const int& input)
+        {
+            Position output;
+            output.posX = posX * input;
+            output.posY = posY * input;
             return output;
         }
         bool operator==(const Position& input)

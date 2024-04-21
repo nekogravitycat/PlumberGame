@@ -24,7 +24,7 @@ class Game
             printInfo();
             // finish setup
             // Game loop
-            
+
             while(true)
             {
                 keyBoard = _getch();
@@ -52,7 +52,8 @@ class Game
         }
 
         void updateState(void)
-        {         
+        {
+            system("CLS");
             if(keyBoard == 'a') // choose left one
             {
                 if(pipeGame.getSelection() != 0)
@@ -70,15 +71,15 @@ class Game
             else if(keyBoard == 's')
             {
                 cout << "Turn it! Have not right it" << endl;
+                pipeGame.Rotate();
             }
             else
             {
                 cout << "Invalid input!" << endl;
             }
-
-            system("CLS");
             extendGraphic.input(pipeGame);
             extendGraphic.update();
+            extendGraphic.Calculate_path();
             extendGraphic.print();
             printInfo();
         }

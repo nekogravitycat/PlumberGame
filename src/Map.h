@@ -3,7 +3,7 @@ File: map.h
 Author: Ayr
 Create Date: 2023/04/18
 Editor: Ayr, MENG-HAN CHEN
-Update Date: 2023/04/21
+Update Date: 2023/04/22
 Description:
 ************************************/
 
@@ -103,6 +103,10 @@ class Map
             start.posX = inputX;
             start.posY = inputY;
         }
+        void Rotate(void)
+        {
+            data[route[selection].posY][route[selection].posX].Rotate();
+        }
 
         // for test
         void printData(void)
@@ -144,7 +148,7 @@ class Map
 
         void setSelection(int inputSelect)
         {
-            data[route[selection].posY][route[selection].posX].setcolor(176);
+            data[route[selection].posY][route[selection].posX].setcolor(64);
             data[start.posY][start.posX].setcolor(207); // start position
             data[route[route.size() - 1].posY][route[route.size() - 1].posX].setcolor(207); // end position
             selection = inputSelect;
@@ -155,14 +159,22 @@ class Map
         {
             return route.size();
         }
+        Position getstart()
+        {
+            return start;
+        }
+        Position getend()
+        {
+            return end;
+        }
 
     private:
         vector<vector<Pipe>> data;  //Record map information
         vector<Position> route;     //Record the correct route Position
-        Position start; // Record start position
-        int selection; // index of route
-        vector<Position> node; // Record node position for generate correct route
-        int col, row; // map size
+        Position start, end;        // Record start and end position
+        int selection = 0;          // index of route
+        vector<Position> node;      // Record node position for generate correct route
+        int col, row;               // map size
 
         // it random route by setting random nodes between start and end
         void randRoute(void)
@@ -179,7 +191,7 @@ class Map
                 {
                     temp.posX = i * 3;
                     temp.posY = rand() % row; // random choose y for node
-                    
+
                     // make sure it have enough deltaY between two node
                     if (abs(node[i - 1].posY - temp.posY) >= 3)
                     {
@@ -195,12 +207,13 @@ class Map
                 temp.posY = rand() % row;
                 node.push_back(temp);
             }
+            end = node[node.size() - 1];
 
             int direction = 1;    //1:down  -1:up
 
             // loop with node to setup route between two node
             for (int i = 0; i < node.size() - 1; i++)
-            {   
+            {  
                 // to consider up or down
                 if (node[i].posY < node[i + 1].posY)
                 {
@@ -252,7 +265,7 @@ class Map
             // check if the route can successfully reach the end, setup color of map
             for (int i = 1; i < route.size() + 1; i++)
             {
-                int color = 176;
+                int color = 64;
                 int mid = 0;
                 Position judge;
 

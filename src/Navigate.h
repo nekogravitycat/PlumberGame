@@ -6,7 +6,6 @@ Editor: Ayr
 Update Date: 2023/04/21
 Description:
 ************************************/
-
 #include <vector>
 #include "Map.h"
 
@@ -17,21 +16,70 @@ class Navigate
     private:
         Map originalMap;
         vector<vector<int>> control;
+        Position current_location;
         int example[4][3][3] = {{{0, 1, 0},
-                                {1, 1, 1},
-                                {0, 1, 0}},
+                                 {1, 1, 1},
+                                 {0, 1, 0}},
 
-                               {{0, 1, 0},
-                                {0, 1, 0},
-                                {0, 1, 0}},
+                                {{0, 1, 0},
+                                 {0, 1, 0},
+                                 {0, 1, 0}},
 
-                               {{0, 1, 0},
-                                {1, 1, 1},
-                                {0, 0, 0}},
+                                {{0, 1, 0},
+                                 {1, 1, 1},
+                                 {0, 0, 0}},
 
-                               {{0, 1, 0},
-                                {0, 1, 1},
-                                {0, 0, 0}}};
+                                {{0, 1, 0},
+                                 {0, 1, 1},
+                                 {0, 0, 0}}};
+        int Calculate_direction(Position input_pos)
+        {
+            Position Displacement;
+            for (int i = 0; i < 4; i++)     // 0:right, 1:up, 2:left, 3:down
+            {
+                switch(i)
+                {
+                    case 0:
+                        Displacement.posX = -1;
+                        Displacement.posY = 0;
+                        break;
+                    case 1:
+                        Displacement.posX = 0;
+                        Displacement.posY = -1;
+                        break;
+                    case 2:
+                        Displacement.posX = 1;
+                        Displacement.posY = 0;
+                        break;
+                    case 3:
+                        Displacement.posX = 0;
+                        Displacement.posY = 1;
+                        break;
+                }
+                Calculate_distance(input_pos, Displacement);
+            }
+        }
+        int Calculate_distance(Position input_pos, Position Displacement)
+        {
+            Position Operation = input_pos + Displacement;
+            if (Operation.posX < 0 || Operation.posX >= originalMap.getColumn() * 3)
+            {
+                return 0;
+            }
+            else if (Operation.posY < 0 || Operation.posY >= originalMap.getRow() * 3)
+            {
+                return 0;
+            }
+            else if (control[Operation.posY][Operation.posX] != 1)
+            {
+                return 0;
+            }
+            else
+            {
+                control[Operation.posY][Operation.posX] = 2;
+                return Calculate_direction(Operation);
+            }
+        }
 
     public:
         void input(Map input_map)
@@ -98,7 +146,11 @@ class Navigate
 
         void Calculate_path()
         {
-
+            current_location = originalMap.getstart() * 3;
+            current_location = current_location + 1;
+            control[current_location.posY][current_location.posX] = 2;
+            //cout << originalMap.getstart().posX << " " << originalMap.getstart().posY << endl;
+            Calculate_direction(current_location);
         }
 
         void print()
@@ -112,12 +164,12 @@ class Navigate
                     if(control[i][j] == 1 && originalMap.getPipeData(j / 3, i / 3).GetColor() != 7)
                     {
                         SetColor(127);
-                        cout << control[i][j];
                     }
-                    else
+                    else if(control[i][j] == 2)
                     {
-                        cout << control[i][j];
+                        SetColor(185);
                     }
+                    cout << control[i][j];
                 }
 
                 SetColor(7);
