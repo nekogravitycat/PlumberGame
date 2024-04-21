@@ -13,7 +13,7 @@ if (gBoard) {
             img.src = `./image/straight.png`;
             square.appendChild(img);
             img.addEventListener('click', function () {
-                const currentRotation = parseFloat(img.style.transform.replace('rotate(', '').replace('deg)', ''));
+                const currentRotation = parseFloat(img.style.transform.replace('rotate(', '').replace('deg)', '')) || 0;
                 img.style.transform = `rotate(${currentRotation + 90}deg)`;
             });
             gBoard.appendChild(square);
