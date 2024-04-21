@@ -19,7 +19,7 @@ class Game
             //pipeGame.printdata();
             extendGraphic.input(pipeGame);
             extendGraphic.create();
-            system("CLS");
+            //system("CLS");
             extendGraphic.print();
             // finish setup
 

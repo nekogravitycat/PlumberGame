@@ -41,11 +41,11 @@ class Navigate
 
         void create()
         {
-            for (int i = 0; i < originalMap.getColumn() * 3; i++)
+            for (int i = 0; i < originalMap.getRow() * 3; i++)
             {
                 vector<int> temp;
 
-                for (int j = 0; j < originalMap.getRow() * 3; j++)
+                for (int j = 0; j < originalMap.getColumn() * 3; j++)
                 {
                     temp.push_back(0);
                 }
@@ -53,33 +53,33 @@ class Navigate
                 control.push_back(temp);
             }
 
-            for(int i = 0; i < originalMap.getColumn(); i++)
+            for(int i = 0; i < originalMap.getRow(); i++)
             {
-                for (int j = 0; j < originalMap.getRow(); j++)
+                for (int j = 0; j < originalMap.getColumn(); j++)
                 {
                     for (int u = 0; u < 3; u++)
                     {
                         for (int v = 0; v < 3; v++)
                         {
-                            Pipe target = originalMap.getPipeData(i, j);
-                            int indexRow = 0, indexCol = 0;    //row:y, col:x
+                            Pipe target = originalMap.getPipeData(j, i);
+                            int indexCol = 0, indexRow = 0;    //col:x, row:y
                             switch(target.GetRotation())
                             {
                                 case 0:
-                                    indexRow = u;
                                     indexCol = v;
+                                    indexRow = u;
                                     break;
                                 case 1:
-                                    indexRow = 2 - v;
                                     indexCol = u;
+                                    indexRow = 2 - v;
                                     break;
                                 case 2:
-                                    indexRow = 2 - u;
                                     indexCol = 2 - v;
+                                    indexRow = 2 - u;
                                     break;
                                 case 3:
-                                    indexRow = v;
                                     indexCol = 2 - u;
+                                    indexRow = v;
                                     break;
                             }
                             control[i * 3 + u][j * 3 + v] = example[target.GetShape()][indexRow][indexCol];
@@ -97,13 +97,13 @@ class Navigate
 
         void print()
         {
-            for (int i = 0; i < originalMap.getColumn() * 3; i++)
+            for (int i = 0; i < originalMap.getRow() * 3; i++)
             {
-                for (int j = 0; j < originalMap.getRow() * 3; j++)
+                for (int j = 0; j < originalMap.getColumn() * 3; j++)
                 {
-                    SetColor(originalMap.getPipeData(i / 3, j / 3).GetColor());
+                    SetColor(originalMap.getPipeData(j / 3, i / 3).GetColor());
 
-                    if(control[i][j] == 1 && originalMap.getPipeData(i / 3, j / 3).GetColor() != 7)
+                    if(control[i][j] == 1 && originalMap.getPipeData(j / 3, i / 3).GetColor() != 7)
                     {
                         SetColor(127);
                         cout << control[i][j];

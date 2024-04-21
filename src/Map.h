@@ -131,8 +131,8 @@ class Map
         }
 
     private:
-        vector<vector<Pipe>> data;
-        vector<Position> route;
+        vector<vector<Pipe>> data;  //Record map information
+        vector<Position> route;     //Record the correct route Position
         Position start;
         vector<Position> node;
         int col, row;

@@ -51,7 +51,7 @@ class Pipe
         {
             color = _color;
         }
-        
+
         void Rotate()
         {
             rotation = (rotation + 1) % 4;
