@@ -65,8 +65,8 @@ class Game
 
         void printInfo(void)
         {
-            cout << "(A) and (D) to change which Pipe you want to select" << endl;
-            cout << "(S) to turn Pipe" << endl;
+            cout << "(W) (A) (S) (D) to change which Pipe you want to select" << endl;
+            cout << "(SPACE) to turn Pipe" << endl;
         }
 
         bool isPositionValid(int rows, int columns)
