@@ -20,6 +20,8 @@ class Pipe
         pShape shape;
         int rotation; // See the note above (0 ~ 3)
         int color = 7;
+        int water = 0; // 0 means does not exist 1 means exist 
+
     public:
         //Pipe Getpipe(char _shape, int _rotation);
         char GetShape()
@@ -37,6 +39,16 @@ class Pipe
             return color;
         }
 
+        void setWater(int input)
+        {
+            water = input;
+        }
+
+        int getWater(void)
+        {
+            return water;
+        }
+
         void SetShape(pShape _shape)
         {
             shape = _shape;
@@ -51,9 +63,14 @@ class Pipe
         {
             color = _color;
         }
-        
+
         void Rotate()
         {
             rotation = (rotation + 1) % 4;
+        }
+
+        void randomRotate(void)
+        {
+            rotation = rand() % 4;
         }
 };
