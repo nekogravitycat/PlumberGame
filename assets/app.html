@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MyApp -- (edit this title in app.html)</title>
+    <title>Plumber Game</title>
     <!-- 核心：Tocas UI -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.2.5/tocas.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.2.5/tocas.min.js"></script>
@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <style>
     body {
       font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif;
@@ -20,9 +20,29 @@
   </head>
 
   <body>
-    <div id="title" class="ts-header is-massive">Plumber Game</div>
-    <div id="board" class="board"></div> 
-    <script src="./js/index.js"></script>
     
+    <!-- home page -->
+    <div class="home-page" id="home-page" style="display: flex;">
+      <div class="title" id="title">Plumber Game</div>
+      <div class="setup-space">
+        <button class="ts-button is-outlined" id="Random-button">Random Mode</button>
+        <button class="ts-button is-outlined" id="Custom-button">Custom Mode</button>
+
+      </div>
+    </div>
+
+    <!-- game page -->
+    <div class="game-page" id="game-page" style="display: none;">
+      <div id="board" class="board"></div>
+    </div>
+      
+    <script src="./js/index.js"></script>
+    <audio src="./audio/Time_Back.mp3" autoplay loop volume="0.1"></audio>
+      
+    <!-- game page -->
   </body>
+
+  
+  
+
 </html>
