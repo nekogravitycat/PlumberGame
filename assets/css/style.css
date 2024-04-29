@@ -112,9 +112,11 @@ body {
 }
 
 .game-page .score-board {
-    display: block;
-    position: relative;
-    width: 100px;
-    height: 100px;
-    
+    position: absolute;
+    top: 200px;
+    left: 20vh;
+    width: 200px;
+    height: 200px;
+    border: 5px solid black;
+    border-radius: 5px;
 }
