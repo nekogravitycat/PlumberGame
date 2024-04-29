@@ -57,6 +57,11 @@ class Game
             inputRows = 0;
         }
 
+        Game(int row, int col) {
+            inputRows = row;
+            inputColumns = col;
+        }
+
     private:
         int inputColumns, inputRows;
         char keyBoard;
