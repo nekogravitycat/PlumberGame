@@ -31,6 +31,7 @@ function startCustom() {
     {
         buttonPart.style.display = 'none';
         inputPart.style.display = 'flex';
+        
     }
 }
 

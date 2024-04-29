@@ -1,6 +1,7 @@
 "use strict";
 let boardCol = 1;
 let boardRow = 1;
+let water = false;
 const homePage = document.getElementById('home-page');
 const gamePage = document.getElementById('game-page');
 const buttonRandom = document.getElementById('Random-button');
@@ -37,6 +38,11 @@ function clickSound() {
     audio.src = './audio/rotate_sound.mp3';
     audio.play();
 }
+function clickPipe(img) {
+    clickSound();
+    const currentRotation = parseFloat(img.style.transform.replace('rotate(', '').replace('deg)', '')) || 0;
+    img.style.transform = `rotate(${currentRotation + 90}deg)`;
+}
 //setup broad
 function generateBoard() {
     if (gBoard) {
@@ -50,11 +56,9 @@ function generateBoard() {
                     img.src = './image/cross.png';
                 else
                     img.src = './image/straight.png';
-                img.addEventListener('click', function () {
-                    clickSound();
-                    const currentRotation = parseFloat(img.style.transform.replace('rotate(', '').replace('deg)', '')) || 0;
-                    img.style.transform = `rotate(${currentRotation + 90}deg)`;
-                });
+                img.onclick = () => {
+                    clickPipe(img);
+                };
                 gBoard.appendChild(img);
             }
         }
