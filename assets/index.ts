@@ -1,10 +1,15 @@
 let boardCol: number = 1;
 let boardRow: number = 1;
+let water: boolean = false; 
 const homePage = document.getElementById('home-page');
 const gamePage = document.getElementById('game-page');
 const buttonRandom = document.getElementById('Random-button');
-const customRandom = document.getElementById('Custom-button');
+const buttonCustom = document.getElementById('Custom-button');
 const gBoard = document.getElementById('board');
+
+buttonRandom?.addEventListener('click', startRandom);
+
+buttonCustom?.addEventListener('click', startCustom);
 
 //the random mode on the game
 function startRandom() {
@@ -15,6 +20,17 @@ function startRandom() {
         boardCol = getRandom(12, 3);
         boardRow = getRandom(12, 3);
         generateBoard();
+    }
+}
+
+//the custom mode on the game
+function startCustom() {
+    const buttonPart = document.getElementById('setup-space');
+    const inputPart = document.getElementById('custom-size');
+    if (homePage && gamePage && inputPart && buttonPart)
+    {
+        buttonPart.style.display = 'none';
+        inputPart.style.display = 'flex';
     }
 }
 
@@ -30,14 +46,18 @@ function clickSound() {
     audio.play();
 }
 
-buttonRandom?.addEventListener('click', startRandom);
+function clickPipe(img: HTMLImageElement) {
+    clickSound();
+    const currentRotation = parseFloat(img.style.transform.replace('rotate(', '').replace('deg)', '')) || 0;
+    img.style.transform = `rotate(${currentRotation + 90}deg)`;
+}
 
 //setup broad
 function generateBoard() {
     if (gBoard) {
         gBoard.style.display = 'grid';
-        gBoard.style.gridTemplateColumns = `repeat(${boardCol}, 50px)`;
-        gBoard.style.gridTemplateRows = `repeat(${boardRow}, 50px)`;
+        gBoard.style.gridTemplateColumns = `repeat(${boardCol}, 75px)`;
+        gBoard.style.gridTemplateRows = `repeat(${boardRow}, 75px)`;
     
         for (let i = 0; i < boardCol; i++) {
             for (let j = 0; j < boardRow; j++) {
@@ -45,12 +65,9 @@ function generateBoard() {
     
                 if (getRandom(0, 1)) img.src = './image/cross.png';
                 else img.src = './image/straight.png';
-    
-                img.addEventListener('click', function() {
-                    clickSound();
-                    const currentRotation = parseFloat(img.style.transform.replace('rotate(', '').replace('deg)', '')) || 0;
-                    img.style.transform = `rotate(${currentRotation + 90}deg)`;
-                });
+                img.onclick = () => {
+                    clickPipe(img);
+                }
                 gBoard.appendChild(img);
             }
         }
