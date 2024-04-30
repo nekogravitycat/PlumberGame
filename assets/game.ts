@@ -1,5 +1,5 @@
 /***********************************************************************
- * File: app.html
+ * File: game.ts
  * Author: nakumi
  * Create Date: 2024/5/1
  * Editor: nakumi Gravity cat
