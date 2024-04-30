@@ -87,9 +87,9 @@ class Game
             extendGraphic.input(pipeGame);
             extendGraphic.update();
             extendGraphic.Calculate_path();
-            system("CLS");
-            extendGraphic.print();
-            printInfo();
+            //system("CLS");
+            //extendGraphic.print();
+            //printInfo();
         }
 
     private:
