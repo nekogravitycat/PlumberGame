@@ -18,6 +18,8 @@
         <input id="Row-input" type="number" min="5" max="30" placeholder="Input Row">
         <input id="Column-input" type="number" min="5" max="30" placeholder="Input Column">
         <button class="ts-button" onclick="CustomStart()">Start Game</button>
+        <button class="ts-button" onclick="FileStart()">Read File</button>
+
       </div>
     </div>
     <!-- game page -->
@@ -32,9 +34,11 @@
       <div id="board" class="board" style="display: grid;"></div>
     </div>
     <!-- win page -->
-    <div class="win-page" id="win-page" style="display: none;">
-      <div class="title" id="title">YOU WIN!</div>
-      <img src="./image/house.svg" id="iconHome" class="icon" onclick="GoHome()">
+    <div class="win-page" id="win-page" style="display: flex;">
+      <div class="title" id="title">
+        YOU WIN!
+        <img src="./image/house.svg" id="iconHome" class="icon" onclick="GoHome()">
+      </div>
     </div>
     <audio src="./audio/Time_Back.mp3" autoplay loop volume="0.1" id="background_music"></audio>
   </body>
