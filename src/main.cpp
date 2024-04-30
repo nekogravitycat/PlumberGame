@@ -102,6 +102,11 @@ void OnDOMReady(void* user_data, ULView caller, unsigned long long frame_id,
   JSObjectSetProperty(ctx, JSContextGetGlobalObject(ctx), name, func, 0, 0);
   JSStringRelease(name);
   // GetPipeInfo
+  name = JSStringCreateWithUTF8CString("ApiStartGame");
+  func = JSObjectMakeFunctionWithCallback(ctx, name, ApiStartGame);
+  JSObjectSetProperty(ctx, JSContextGetGlobalObject(ctx), name, func, 0, 0);
+  JSStringRelease(name);
+  // GetPipeInfo
   name = JSStringCreateWithUTF8CString("ApiGetPipeInfo");
   func = JSObjectMakeFunctionWithCallback(ctx, name, ApiGetPipeInfo);
   JSObjectSetProperty(ctx, JSContextGetGlobalObject(ctx), name, func, 0, 0);

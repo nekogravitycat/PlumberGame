@@ -117,12 +117,12 @@ function GameStart(row: number, column: number) {
     ApiStartGame(row, column)
 }
 
-function GetPipeInfo(): string {
+function GetPipeInfo(row: number, column: number): string {
     // It will consists of 3 char: Shape, rotation, water
     // Shape:    0, 1, 2, 3
     // Rotation: 0, 1, 2, 3
     // Water:    0, 1
-    return ApiGetPipeInfo();
+    return ApiGetPipeInfo(row, column);
 }
 
 function Click(row: number, column: number) {
