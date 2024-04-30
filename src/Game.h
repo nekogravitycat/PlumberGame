@@ -79,7 +79,7 @@ public:
 		extendGraphic.update();
 		extendGraphic.Calculate_path();
 		//system("CLS");
-		//extendGraphic.print();
+		extendGraphic.print();
 		//printInfo();
 	}
 

@@ -101,9 +101,6 @@ function generateBoard() {
                         countDisplay.textContent = `click: ${countClick}`;
                     Click(j, i);
                     clickPipe(img, parseInt(info[1]));
-                    if (gBoard)
-                        gBoard.innerHTML = '';
-                    generateBoard();
                 };
                 gBoard.appendChild(img);
             }
