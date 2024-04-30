@@ -82,7 +82,7 @@ public:
 	}
 
 	int GetPipeInfo(int row, int col) {
-		Pipe pipe = pipeGame.getPipeData(col, row);
+		Pipe pipe = pipeGame.getPipeData(row, col);
 		int shape = pipe.GetShape();
 		int rotation = pipe.GetRotation();
 		int water = pipe.getWater();
