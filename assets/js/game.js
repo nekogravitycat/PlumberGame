@@ -67,6 +67,10 @@ function DisplayBoard() {
         }
     }
 }
+function Mute() {
+    const audioElement = document.getElementById('background_music');
+    audioElement.muted = (audioElement.muted) ? false : true;
+}
 function ClearBoard() {
     const board = document.getElementById('board');
     if (!board) {
@@ -118,6 +122,8 @@ function GoHome() {
     gamePage.style.display = "none";
 }
 function GameOver() {
+}
+function GoHome() {
 }
 function GetRows() {
     return parseInt(ApiGetRows());

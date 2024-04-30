@@ -71,6 +71,11 @@ function DisplayBoard() {
   }
 }
 
+function Mute() {
+  const audioElement = document.getElementById('background_music') as HTMLMediaElement;
+  audioElement.muted = (audioElement.muted)? false : true;
+}
+
 function ClearBoard() {
   const board = document.getElementById('board');
   if (!board) {
