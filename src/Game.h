@@ -73,16 +73,16 @@ public:
 
 	bool IsStart(int row, int col) {
 		Position pos = pipeGame.getstart();
-		return row == pos.posY && col == pos.posY;
+		return row == pos.posY && col == pos.posX;
 	}
 
 	bool IsEnd(int row, int col) {
 		Position pos = pipeGame.getend();
-		return row == pos.posY && col == pos.posY;
+		return row == pos.posY && col == pos.posX;
 	}
 
 	int GetPipeInfo(int row, int col) {
-		Pipe pipe = pipeGame.getPipeData(col, row);
+		Pipe pipe = pipeGame.getPipeData(row, col);
 		int shape = pipe.GetShape();
 		int rotation = pipe.GetRotation();
 		int water = pipe.getWater();

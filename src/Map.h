@@ -3,10 +3,9 @@ File: map.h
 Author: Ayr
 Create Date: 2023/04/18
 Editor: Ayr, MENG-HAN CHEN
-Update Date: 2023/04/22
+Update Date: 2023/04/30
 Description:
 ************************************/
-
 #pragma once
 
 #include <iostream>
@@ -213,13 +212,13 @@ private:
 				temp.posY = rand() % row; // random choose y for node
 
 				// make sure it have enough deltaY between two node
-				if (abs(node[i - 1].posY - temp.posY) >= 3) {
+				if (abs(node[i - 1].posY - temp.posY) >= 1) {
 					node.push_back(temp);
 					break;
 				}
 			}
 		}
-
+		cout << "o" << endl;
 		if (col / 3 != 0) {
 			temp.posX = col - 1;
 			temp.posY = rand() % row;

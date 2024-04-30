@@ -130,6 +130,14 @@ JSValueRef ApiGetPipeInfo(JSContextRef ctx, JSObjectRef function, JSObjectRef th
   return value;
 }
 
+JSValueRef ApiIsOver(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
+  string info = game.isItGameOver() ? "1" : "0";
+  JSStringRef str = JSStringCreateWithUTF8CString(info.c_str());
+  JSValueRef value = JSValueMakeString(ctx, str);
+  JSStringRelease(str);
+  return value;
+}
+
 // This is called when the page has finished parsing the document and is ready to execute scripts.
 // We will use this event to set up our JavaScript <-> C callback.
 void OnDOMReady(void* user_data, ULView caller, unsigned long long frame_id,
@@ -164,6 +172,11 @@ void OnDOMReady(void* user_data, ULView caller, unsigned long long frame_id,
   // IsEnd
   name = JSStringCreateWithUTF8CString("ApiIsEnd");
   func = JSObjectMakeFunctionWithCallback(ctx, name, ApiIsEnd);
+  JSObjectSetProperty(ctx, JSContextGetGlobalObject(ctx), name, func, 0, 0);
+  JSStringRelease(name);
+  // IsOver
+  name = JSStringCreateWithUTF8CString("ApiIsOver");
+  func = JSObjectMakeFunctionWithCallback(ctx, name, ApiIsOver);
   JSObjectSetProperty(ctx, JSContextGetGlobalObject(ctx), name, func, 0, 0);
   JSStringRelease(name);
   // GetPipeInfo
