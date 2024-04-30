@@ -21,7 +21,7 @@ void Map::startOperate(void) {
 
 // default constructor, it will set up random seed, and ohter data set to zero
 Map::Map(void) {
-	srand(time(NULL));
+	srand((unsigned)time(NULL));
 	col = 0;
 	row = 0;
 	start.posX = 0;
@@ -35,7 +35,7 @@ Map::Map(void) {
 // setting constructor, with input columns and rows, set up random seed also
 // setup starting position
 Map::Map(int inputCol, int inputRow) {
-	srand(time(0));
+	srand((unsigned)time(0));
 	col = inputCol;
 	row = inputRow;
 	start.posX = 0;
@@ -76,7 +76,7 @@ Pipe Map::getPipeData(int inputX, int inputY) {
 // if we do not setup col and row when we create Map object, we setup here
 // it also setup starting position
 void Map::setSize(int inputRow, int inputCol) {
-	srand(time(0));
+	srand((unsigned)time(0));
 	row = inputRow;   //Y
 	col = inputCol;   //X
 	start.posX = 0;
@@ -192,7 +192,7 @@ void Map::setSelection(int inputY, int inputX) {
 }
 
 int Map::getRouteSize(void) {
-	return route.size();
+	return (int)route.size();
 }
 
 Position Map::getstart() {
@@ -316,7 +316,7 @@ void Map::randRoute(void) {
 		}
 
 		forward = forward + 1;
-		pShape psh;
+		pShape psh = CROSS;
 		int randNum = rand() % 3;
 
 		if (judge.posX == 0 || judge.posY == 0) {

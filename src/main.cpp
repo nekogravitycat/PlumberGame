@@ -76,16 +76,16 @@ void OnResize(void* user_data, ULWindow window, unsigned int width, unsigned int
 }
 
 JSValueRef ApiStartGame(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
-  int row = JSValueToNumber(ctx, arguments[0], exception);
-  int column = JSValueToNumber(ctx, arguments[1], exception);
+  int row = (int)JSValueToNumber(ctx, arguments[0], exception);
+  int column = (int)JSValueToNumber(ctx, arguments[1], exception);
   game = Game(row, column);
   game.startGameCore(row, column);
   return JSValueMakeNull(ctx);
 }
 
 JSValueRef ApiClick(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
-  int row = JSValueToNumber(ctx, arguments[0], exception);
-  int column = JSValueToNumber(ctx, arguments[1], exception);
+  int row = (int)JSValueToNumber(ctx, arguments[0], exception);
+  int column = (int)JSValueToNumber(ctx, arguments[1], exception);
   game.Click(row, column);
   return JSValueMakeNull(ctx);
 }
@@ -107,8 +107,8 @@ JSValueRef ApiGetColumns(JSContextRef ctx, JSObjectRef function, JSObjectRef thi
 }
 
 JSValueRef ApiIsStart(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
-  int row = JSValueToNumber(ctx, arguments[0], exception);
-  int column = JSValueToNumber(ctx, arguments[1], exception);
+  int row = (int)JSValueToNumber(ctx, arguments[0], exception);
+  int column = (int)JSValueToNumber(ctx, arguments[1], exception);
   string info = game.IsStart(row, column) ? "1" : "0";
   JSStringRef str = JSStringCreateWithUTF8CString(info.c_str());
   JSValueRef value = JSValueMakeString(ctx, str);
@@ -117,8 +117,8 @@ JSValueRef ApiIsStart(JSContextRef ctx, JSObjectRef function, JSObjectRef thisOb
 }
 
 JSValueRef ApiIsEnd(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
-  int row = JSValueToNumber(ctx, arguments[0], exception);
-  int column = JSValueToNumber(ctx, arguments[1], exception);
+  int row = (int)JSValueToNumber(ctx, arguments[0], exception);
+  int column = (int)JSValueToNumber(ctx, arguments[1], exception);
   string info = game.IsEnd(row, column) ? "1" : "0";
   JSStringRef str = JSStringCreateWithUTF8CString(info.c_str());
   JSValueRef value = JSValueMakeString(ctx, str);
@@ -127,8 +127,8 @@ JSValueRef ApiIsEnd(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObje
 }
  
 JSValueRef ApiGetPipeInfo(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
-  int row = JSValueToNumber(ctx, arguments[0], exception);
-  int column = JSValueToNumber(ctx, arguments[1], exception);
+  int row = (int)JSValueToNumber(ctx, arguments[0], exception);
+  int column = (int)JSValueToNumber(ctx, arguments[1], exception);
   string info = to_string(game.GetPipeInfo(row, column));
   while (info.length() < 3) {
     info = "0" + info;

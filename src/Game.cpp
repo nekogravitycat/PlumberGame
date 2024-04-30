@@ -48,11 +48,13 @@ bool Game::isItGameOver(void) {
 
 // default constructor
 Game::Game(void) {
+	keyBoard = ' ';
 	inputColumns = 0;
 	inputRows = 0;
 }
 
 Game::Game(int row, int col) {
+	keyBoard = ' ';
 	inputRows = row;
 	inputColumns = col;
 }

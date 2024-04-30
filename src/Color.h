@@ -10,4 +10,7 @@
 
 #include<windows.h>
 
+// Intent: To set the color of the console text
+// Pre: inputColor must be an integer representing a valid console color code
+// Post: Sets the color of the console text to inputColor, defaulting to color code 7 (white)
 void SetColor(int inputColor = 7);
