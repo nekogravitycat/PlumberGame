@@ -91,7 +91,7 @@ function generateBoard() {
                 const img = document.createElement('img');
                 img.id = `${i}_${j}`;
                 let info = "100";
-                if (info[2])
+                if (parseInt(info[2]))
                     img.src = `./image/water_${pipeType[parseInt(info[0])]}.png`;
                 else
                     img.src = `./image/${pipeType[parseInt(info[0])]}.png`;
