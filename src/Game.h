@@ -5,171 +5,147 @@
 
 using namespace std;
 
-class Game
-{
-    public:
-        void startGame(void)
-        {
-            // setUp Map and extenGraphic
-            cout << "Please input how many columns: ";
-            cin >> inputColumns;
-            cout << "Please input how many Rows: ";
-            cin >> inputRows;
-            pipeGame.setSize(inputColumns, inputRows);
-            pipeGame.startOperate();
-            extendGraphic.input(pipeGame);
-            extendGraphic.setReference(&pipeGame);
-            extendGraphic.create();
-            extendGraphic.Calculate_path();
-            extendGraphic.print();
-            printInfo();
-            // finish setup
+class Game {
+public:
+	void startGame(void) {
+		// setUp Map and extenGraphic
+		cout << "Please input how many columns: ";
+		cin >> inputColumns;
+		cout << "Please input how many Rows: ";
+		cin >> inputRows;
+		pipeGame.setSize(inputColumns, inputRows);
+		pipeGame.startOperate();
+		extendGraphic.input(pipeGame);
+		extendGraphic.setReference(&pipeGame);
+		extendGraphic.create();
+		extendGraphic.Calculate_path();
+		extendGraphic.print();
+		printInfo();
+		// finish setup
 
-            // Game loop
-            while(true)
-            {
-                keyBoard = _getch();
+		// Game loop
+		while (true) {
+			keyBoard = _getch();
 
-                if(updateState())
-                {
-                    break;
-                }
-            }
-            // Game loop end
-        }
+			if (updateState()) {
+				break;
+			}
+		}
+		// Game loop end
+	}
 
-        bool isItGameOver(void)
-        {
-            if(pipeGame.getPipe(pipeGame.getend().posY, pipeGame.getend().posX).getWater() == 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+	bool isItGameOver(void) {
+		if (pipeGame.getPipe(pipeGame.getend().posY, pipeGame.getend().posX).getWater() == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
-        // default constructor
-        Game(void)
-        {
-            inputColumns = 0;
-            inputRows = 0;
-        }
+	// default constructor
+	Game(void) {
+		inputColumns = 0;
+		inputRows = 0;
+	}
 
-        Game(int row, int col) {
-            inputRows = row;
-            inputColumns = col;
-        }
+	Game(int row, int col) {
+		inputRows = row;
+		inputColumns = col;
+	}
 
-        void startGameCore(int row, int col)
-        {
-            pipeGame.setSize(row, col);
-            pipeGame.startOperate();
-            extendGraphic.input(pipeGame);
-            extendGraphic.setReference(&pipeGame);
-            extendGraphic.create();
-            extendGraphic.Calculate_path();
-        }
+	void startGameCore(int row, int col) {
+		pipeGame.setSize(row, col);
+		pipeGame.startOperate();
+		extendGraphic.input(pipeGame);
+		extendGraphic.setReference(&pipeGame);
+		extendGraphic.create();
+		extendGraphic.Calculate_path();
+	}
 
-        int GetPipeInfo(int row, int col) {
-            Pipe pipe = pipeGame.getPipeData(col, row);
-            int shape = pipe.GetShape();
-            int rotation = pipe.GetRotation();
-            int water = pipe.getWater();
-            int info = shape * 100 + rotation * 10 + water;
-            return info;
-        }
+	int GetPipeInfo(int row, int col) {
+		Pipe pipe = pipeGame.getPipeData(col, row);
+		int shape = pipe.GetShape();
+		int rotation = pipe.GetRotation();
+		int water = pipe.getWater();
+		int info = shape * 100 + rotation * 10 + water;
+		return info;
+	}
 
-        void Click(int row, int col) {
-            pipeGame.setSelection(row, col);
-            pipeGame.Rotate();
-            extendGraphic.input(pipeGame);
-            extendGraphic.update();
-            extendGraphic.Calculate_path();
-            //system("CLS");
-            //extendGraphic.print();
-            //printInfo();
-        }
+	void Click(int row, int col) {
+		pipeGame.setSelection(row, col);
+		pipeGame.Rotate();
+		extendGraphic.input(pipeGame);
+		extendGraphic.update();
+		extendGraphic.Calculate_path();
+		//system("CLS");
+		//extendGraphic.print();
+		//printInfo();
+	}
 
-    private:
-        int inputColumns, inputRows;
-        char keyBoard;
-        Map pipeGame;
-        Navigate extendGraphic;
+private:
+	int inputColumns, inputRows;
+	char keyBoard;
+	Map pipeGame;
+	Navigate extendGraphic;
 
-        void printInfo(void)
-        {
-            cout << "(W) (A) (S) (D) to change which Pipe you want to select" << endl;
-            cout << "(SPACE) to turn Pipe" << endl;
-        }
+	void printInfo(void) {
+		cout << "(W) (A) (S) (D) to change which Pipe you want to select" << endl;
+		cout << "(SPACE) to turn Pipe" << endl;
+	}
 
-        bool isPositionValid(int rows, int columns)
-        {
-            if(columns< 0 || columns >= inputColumns)
-            {
-                return false;
-            }
+	bool isPositionValid(int rows, int columns) {
+		if (columns < 0 || columns >= inputColumns) {
+			return false;
+		}
 
-            if(rows < 0 || rows >= inputRows)
-            {
-                return false;
-            }
+		if (rows < 0 || rows >= inputRows) {
+			return false;
+		}
 
-            return true;
-        }
+		return true;
+	}
 
-        bool updateState(void)
-        {
-            if(keyBoard == 'w')
-            {
-                if(isPositionValid(pipeGame.getSelection().posY - 1, pipeGame.getSelection().posX))
-                {
-                    pipeGame.setSelection(pipeGame.getSelection().posY - 1, pipeGame.getSelection().posX);
-                }
-            }
-            else if(keyBoard == 'a')
-            {
-                if(isPositionValid(pipeGame.getSelection().posY, pipeGame.getSelection().posX - 1))
-                {
-                    pipeGame.setSelection(pipeGame.getSelection().posY, pipeGame.getSelection().posX - 1);
-                }
-            }
-            else if(keyBoard == 's')
-            {
-                if(isPositionValid(pipeGame.getSelection().posY + 1, pipeGame.getSelection().posX))
-                {
-                    pipeGame.setSelection(pipeGame.getSelection().posY + 1, pipeGame.getSelection().posX);
-                }
-            }
-            else if(keyBoard == 'd')
-            {
-                if(isPositionValid(pipeGame.getSelection().posY, pipeGame.getSelection().posX + 1))
-                {
-                    pipeGame.setSelection(pipeGame.getSelection().posY, pipeGame.getSelection().posX + 1);
-                }
-            }
-            else if(keyBoard == ' ') // space to turn pipe
-            {
-                pipeGame.Rotate();
-            }
-            
-            extendGraphic.input(pipeGame);
-            extendGraphic.update();
-            extendGraphic.Calculate_path();
-            system("CLS");
+	bool updateState(void) {
+		if (keyBoard == 'w') {
+			if (isPositionValid(pipeGame.getSelection().posY - 1, pipeGame.getSelection().posX)) {
+				pipeGame.setSelection(pipeGame.getSelection().posY - 1, pipeGame.getSelection().posX);
+			}
+		}
+		else if (keyBoard == 'a') {
+			if (isPositionValid(pipeGame.getSelection().posY, pipeGame.getSelection().posX - 1)) {
+				pipeGame.setSelection(pipeGame.getSelection().posY, pipeGame.getSelection().posX - 1);
+			}
+		}
+		else if (keyBoard == 's') {
+			if (isPositionValid(pipeGame.getSelection().posY + 1, pipeGame.getSelection().posX)) {
+				pipeGame.setSelection(pipeGame.getSelection().posY + 1, pipeGame.getSelection().posX);
+			}
+		}
+		else if (keyBoard == 'd') {
+			if (isPositionValid(pipeGame.getSelection().posY, pipeGame.getSelection().posX + 1)) {
+				pipeGame.setSelection(pipeGame.getSelection().posY, pipeGame.getSelection().posX + 1);
+			}
+		}
+		else if (keyBoard == ' ') // space to turn pipe
+		{
+			pipeGame.Rotate();
+		}
 
-            if(!isItGameOver())
-            {
-                extendGraphic.print();
-                printInfo();
-                return false;
-            }
-            else
-            {
-                extendGraphic.print();
-                cout << "GAME OVER!!" << endl;
-                return true; // true means game over
-            }
-        }
+		extendGraphic.input(pipeGame);
+		extendGraphic.update();
+		extendGraphic.Calculate_path();
+		system("CLS");
+
+		if (!isItGameOver()) {
+			extendGraphic.print();
+			printInfo();
+			return false;
+		}
+		else {
+			extendGraphic.print();
+			cout << "GAME OVER!!" << endl;
+			return true; // true means game over
+		}
+	}
 };

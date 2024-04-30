@@ -70,6 +70,7 @@ JSValueRef ApiStartGame(JSContextRef ctx, JSObjectRef function, JSObjectRef this
   int row = JSValueToNumber(ctx, arguments[0], exception);
   int column = JSValueToNumber(ctx, arguments[1], exception);
   game = Game(row, column);
+  game.startGameCore(row, column);
   return JSValueMakeNull(ctx);
 }
 
@@ -79,7 +80,7 @@ JSValueRef ApiClick(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObje
   game.Click(row, column);
   return JSValueMakeNull(ctx);
 }
-
+ 
 JSValueRef ApiGetPipeInfo(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
   int row = JSValueToNumber(ctx, arguments[0], exception);
   int column = JSValueToNumber(ctx, arguments[1], exception);
