@@ -90,7 +90,7 @@ function generateBoard() {
             for (let j = 0; j < boardRow; j++) {
                 const img = document.createElement('img');
                 img.id = `${i}_${j}`;
-                let info = GetPipeInfo();
+                let info = "101";
                 if (info[1])
                     img.src = `./image/water_${pipeType[parseInt(info[0])]}.png`;
                 else
@@ -109,12 +109,12 @@ function generateBoard() {
 function GameStart(row, column) {
     ApiStartGame(row, column);
 }
-function GetPipeInfo() {
+function GetPipeInfo(row, column) {
     // It will consists of 3 char: Shape, rotation, water
     // Shape:    0, 1, 2, 3
     // Rotation: 0, 1, 2, 3
     // Water:    0, 1
-    return ApiGetPipeInfo();
+    return ApiGetPipeInfo(row, column);
 }
 function Click(row, column) {
     ApiClick(row, column);
