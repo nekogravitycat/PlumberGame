@@ -37,6 +37,8 @@ buttonHome === null || buttonHome === void 0 ? void 0 : buttonHome.addEventListe
 function startRandom() {
     boardCol = getRandom(12, 3);
     boardRow = getRandom(12, 3);
+    if (boardCol > 3 && boardRow > 3)
+        GameStart(boardRow, boardCol);
     generateBoard();
 }
 //the custom mode on the game
@@ -88,7 +90,7 @@ function generateBoard() {
             for (let j = 0; j < boardRow; j++) {
                 const img = document.createElement('img');
                 img.id = `${i}_${j}`;
-                let info = "211";
+                let info = GetPipeInfo(j, i);
                 if (parseInt(info[2]))
                     img.src = `./image/water_${pipeType[parseInt(info[0])]}.png`;
                 else
