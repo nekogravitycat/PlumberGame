@@ -3,6 +3,10 @@
 #include "Game.h"
 #include <iostream>
 #include <string>
+#include <Windows.h>
+#include <mmsystem.h>
+
+#pragma comment(lib, "Winmm.lib")
 
 using namespace std;
 
@@ -192,6 +196,7 @@ void Shutdown() {
 }
 
 int main() {
+  PlaySound(TEXT("../assets/sound/bgm.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
   Init();
   ulAppRun(app);
   Shutdown();
