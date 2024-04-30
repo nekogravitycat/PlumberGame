@@ -6,7 +6,6 @@ Editor: Ayr, MENG-HAN CHEN
 Update Date: 2023/04/30
 Description:
 ************************************/
-
 #pragma once
 
 #include <iostream>
