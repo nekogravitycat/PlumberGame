@@ -1,3 +1,11 @@
+/***********************************************************************
+ * File: main.cpp
+ * Author: B11230034
+ * Create Date: 2024/5/1
+ * Editor: B11230034
+ * Update Date: 2024/5/1
+ * Description: A plumber game
+***********************************************************************/
 #include <AppCore/CAPI.h>
 #include <JavaScriptCore/JavaScript.h>
 #include "Game.h"

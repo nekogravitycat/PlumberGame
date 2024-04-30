@@ -1,18 +1,13 @@
-/************************************
-File: Color.h
-Author:Ayr
-Create Date: 2023/04/19
-Editor: Ayr
-Update Date: 2023/04/30
-Description:
-************************************/
+/***********************************************************************
+ * File: Color.h
+ * Author: Ayr
+ * Create Date: 2023/04/19
+ * Editor: Ayr, Gravity cat
+ * Update Date: 2024/5/1
+ * Description: Header for color class
+***********************************************************************/
+#pragma once
+
 #include<windows.h>
 
-using namespace std;
-
-void SetColor(int inputColor = 7)
-{
-  HANDLE hConsole;
-  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-  SetConsoleTextAttribute(hConsole,inputColor);
-}
+void SetColor(int inputColor = 7);
