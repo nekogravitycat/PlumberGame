@@ -63,6 +63,24 @@ public:
 		extendGraphic.Calculate_path();
 	}
 
+	int GetRows() {
+		return inputRows;
+	}
+
+	int GetColumns() {
+		return inputColumns;
+	}
+
+	bool IsStart(int row, int col) {
+		Position pos = pipeGame.getstart();
+		return row == pos.posY && col == pos.posY;
+	}
+
+	bool IsEnd(int row, int col) {
+		Position pos = pipeGame.getend();
+		return row == pos.posY && col == pos.posY;
+	}
+
 	int GetPipeInfo(int row, int col) {
 		Pipe pipe = pipeGame.getPipeData(col, row);
 		int shape = pipe.GetShape();

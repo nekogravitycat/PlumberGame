@@ -3,30 +3,23 @@
   <head>
     <title>Plumber Game</title>
     <link rel="stylesheet" href="./css/style.css">
-    <style>
-    body {
-      font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif;
-    }
-    </style>
-    
   </head>
-
   <body>
-    
     <!-- home page -->
     <div class="home-page" id="home-page" style="display: flex;">
       <div class="title" id="title">Plumber Game</div>
+      <!-- Mode select -->
       <div class="setup-space" id="setup-space" style="display: flex;">
-        <button class="ts-button is-outlined" id="Random-button">Random Mode</button>
-        <button class="ts-button is-outlined" id="Custom-button">Custom Mode</button>
+        <button class="ts-button" onclick="RandomStart()">Random Mode</button>
+        <button class="ts-button" onclick="CustomMenu()">Custom Mode</button>
       </div>
+      <!-- Custom area -->
       <div class="custom-size" id="custom-size" style="display: none;">
-        <input id="Row-input" type="text" placeholder="Input Row">
-        <input id="Column-input" type="text" placeholder="Input Column">
-        <button class="ts-button is-outlined" id="enter-button">Start Game</button>
+        <input id="Row-input" type="number" min="5" max="30" placeholder="Input Row">
+        <input id="Column-input" type="number" min="5" max="30" placeholder="Input Column">
+        <button class="ts-button" onclick="CustomStart()">Start Game</button>
       </div>
     </div>
-
     <!-- game page -->
     <div class="game-page" id="game-page" style="display: none;">
       <div id="score-board" class="score-board">
@@ -36,16 +29,14 @@
           <img src="./image/shut_up.svg" id="iconMute" class="icon">
         </div>
       </div>
-      <div id="board" class="board"></div>
+      <div id="board" class="board" style="display: grid;"></div>
     </div>
-      
-    <script src="./js/index.js"></script>
     <audio src="./audio/Time_Back.mp3" autoplay loop volume="0.1"></audio>
-      
-    <!-- game page -->
   </body>
-
-  
-  
-
+  <script src="./js/game.js"></script>
+  <style>
+    body {
+      font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif;
+    }
+  </style>
 </html>

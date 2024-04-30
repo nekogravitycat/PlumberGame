@@ -80,6 +80,42 @@ JSValueRef ApiClick(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObje
   game.Click(row, column);
   return JSValueMakeNull(ctx);
 }
+
+JSValueRef ApiGetRows(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
+  string info = to_string(game.GetRows());
+  JSStringRef str = JSStringCreateWithUTF8CString(info.c_str());
+  JSValueRef value = JSValueMakeString(ctx, str);
+  JSStringRelease(str);
+  return value;
+}
+
+JSValueRef ApiGetColumns(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
+  string info = to_string(game.GetColumns());
+  JSStringRef str = JSStringCreateWithUTF8CString(info.c_str());
+  JSValueRef value = JSValueMakeString(ctx, str);
+  JSStringRelease(str);
+  return value;
+}
+
+JSValueRef ApiIsStart(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
+  int row = JSValueToNumber(ctx, arguments[0], exception);
+  int column = JSValueToNumber(ctx, arguments[1], exception);
+  string info = game.IsStart(row, column) ? "1" : "0";
+  JSStringRef str = JSStringCreateWithUTF8CString(info.c_str());
+  JSValueRef value = JSValueMakeString(ctx, str);
+  JSStringRelease(str);
+  return value;
+}
+
+JSValueRef ApiIsEnd(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
+  int row = JSValueToNumber(ctx, arguments[0], exception);
+  int column = JSValueToNumber(ctx, arguments[1], exception);
+  string info = game.IsEnd(row, column) ? "1" : "0";
+  JSStringRef str = JSStringCreateWithUTF8CString(info.c_str());
+  JSValueRef value = JSValueMakeString(ctx, str);
+  JSStringRelease(str);
+  return value;
+}
  
 JSValueRef ApiGetPipeInfo(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
   int row = JSValueToNumber(ctx, arguments[0], exception);
@@ -108,6 +144,26 @@ void OnDOMReady(void* user_data, ULView caller, unsigned long long frame_id,
   // StartGame
   name = JSStringCreateWithUTF8CString("ApiStartGame");
   func = JSObjectMakeFunctionWithCallback(ctx, name, ApiStartGame);
+  JSObjectSetProperty(ctx, JSContextGetGlobalObject(ctx), name, func, 0, 0);
+  JSStringRelease(name);
+  // GetRows
+  name = JSStringCreateWithUTF8CString("ApiGetRows");
+  func = JSObjectMakeFunctionWithCallback(ctx, name, ApiGetRows);
+  JSObjectSetProperty(ctx, JSContextGetGlobalObject(ctx), name, func, 0, 0);
+  JSStringRelease(name);
+  // GetColumns
+  name = JSStringCreateWithUTF8CString("ApiGetColumns");
+  func = JSObjectMakeFunctionWithCallback(ctx, name, ApiGetColumns);
+  JSObjectSetProperty(ctx, JSContextGetGlobalObject(ctx), name, func, 0, 0);
+  JSStringRelease(name);
+  // IsStart
+  name = JSStringCreateWithUTF8CString("ApiIsStart");
+  func = JSObjectMakeFunctionWithCallback(ctx, name, ApiIsStart);
+  JSObjectSetProperty(ctx, JSContextGetGlobalObject(ctx), name, func, 0, 0);
+  JSStringRelease(name);
+  // IsEnd
+  name = JSStringCreateWithUTF8CString("ApiIsEnd");
+  func = JSObjectMakeFunctionWithCallback(ctx, name, ApiIsEnd);
   JSObjectSetProperty(ctx, JSContextGetGlobalObject(ctx), name, func, 0, 0);
   JSStringRelease(name);
   // GetPipeInfo

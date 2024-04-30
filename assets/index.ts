@@ -90,8 +90,8 @@ function generateBoard() {
 
         if (boardCol > 15 || boardRow > 15) imgSize = 25;
 
-        gBoard.style.gridTemplateColumns = `repeat(${boardCol}, ${imgSize}px)`;
         gBoard.style.gridTemplateRows = `repeat(${boardRow}, ${imgSize}px)`;
+        gBoard.style.gridTemplateColumns = `repeat(${boardCol}, ${imgSize}px)`;
     
         for (let i = 0; i < boardCol; i++) {
             for (let j = 0; j < boardRow; j++) {
@@ -104,10 +104,8 @@ function generateBoard() {
                 img.onclick = () => {
                     countClick++;
                     if (countDisplay) countDisplay.textContent = `click: ${countClick}`;
-                    Click(j, i);
                     clickPipe(img, parseInt(info[1]));
-                    if (gBoard) gBoard.innerHTML = '';
-                    generateBoard();        
+                    Click(j, i);
                 }
                 gBoard.appendChild(img);
             }
