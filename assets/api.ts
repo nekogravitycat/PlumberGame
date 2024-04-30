@@ -13,3 +13,7 @@ function GetPipeInfo(): string {
 function Click(row: number, column: number) {
   ApiClick(row, column);
 }
+
+function GameOver(): bool {
+  return ApiGameOver();
+}
