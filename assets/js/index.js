@@ -69,6 +69,7 @@ function clickSound() {
 //click rotate image
 function clickPipe(img, angle) {
     clickSound();
+    img.style.transform = `rotate(${angle * 90}deg)`;
 }
 //setup broad
 function generateBoard() {
@@ -93,13 +94,16 @@ function generateBoard() {
                     img.src = `./image/water_${pipeType[parseInt(info[0])]}.png`;
                 else
                     img.src = `./image/${pipeType[parseInt(info[0])]}.png`;
-                let currentRotation = parseInt(info[1]) * 90;
-                img.style.transform = `rotate(${currentRotation}deg)`;
+                img.style.transform = `rotate(${parseInt(info[1]) * 90}deg)`;
                 img.onclick = () => {
                     countClick++;
                     if (countDisplay)
                         countDisplay.textContent = `click: ${countClick}`;
+                    Click(j, i);
                     clickPipe(img, parseInt(info[1]));
+                    if (gBoard)
+                        gBoard.innerHTML = '';
+                    generateBoard();
                 };
                 gBoard.appendChild(img);
             }
