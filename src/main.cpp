@@ -15,13 +15,10 @@ ULView view = 0;
 
 // Forward declaration of our OnUpdate callback.
 void OnUpdate(void* user_data);
-
 // Forward declaration of our OnClose callback.
 void OnClose(void* user_data, ULWindow window);
-
 // Forward declaration of our OnResize callback.
 void OnResize(void* user_data, ULWindow window, unsigned int width, unsigned int height);
-
 // Forward declaration of our OnDOMReady callback.
 void OnDOMReady(void* user_data, ULView caller, unsigned long long frame_id, bool is_main_frame, ULString url);
 
@@ -200,7 +197,6 @@ int main() {
   Shutdown();
   return 0;
 }
-
 
 /*
 #include"Game.h"

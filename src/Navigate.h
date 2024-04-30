@@ -37,8 +37,8 @@ private:
 	int Calculate_direction(Position input_pos) {
 		Position Displacement;
 
-		for (int i = 0; i < 4; i++)     // 0:right, 1:up, 2:left, 3:down
-		{
+		// 0:right, 1:up, 2:left, 3:down
+		for (int i = 0; i < 4; i++) {
 			switch (i) {
 			case 0:
 				Displacement.posX = -1;
