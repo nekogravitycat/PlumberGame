@@ -62,6 +62,8 @@ class Navigate
 
                 Calculate_distance(input_pos, Displacement);
             }
+
+            return 0;
         }
 
         int Calculate_distance(Position input_pos, Position Displacement)

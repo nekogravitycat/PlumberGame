@@ -4,6 +4,6 @@ using namespace std;
 
 int main(void)
 {
-    Game mainGame;
+    Game mainGame(7, 6);
     mainGame.startGame();
 }
