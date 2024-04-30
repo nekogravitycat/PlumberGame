@@ -89,8 +89,6 @@ function StartGame(rows: number, columns: number) {
   gamePage.style.display = "flex";
   ApiStartGame(rows, columns);
   DisplayBoard();
-  let bgm = new Audio("./audio/bgm.mp3");
-  bgm.play();
 }
 
 let clickCount: number = 0;
@@ -114,7 +112,6 @@ function Click(row: number, column: number) {
 
 function GoHome() {
   ClearBoard();
-  bgm.pause();
   clickCount = 0;
   const homePage = document.getElementById("home-page");
   const setupSpace = document.getElementById("setup-space");
@@ -129,7 +126,6 @@ function GoHome() {
   customSize.style.display = "none";
   gamePage.style.display = "none";
   winPage.style.display = "none";
-  MuteBGM();
 }
 
 function GameOver(){
@@ -163,17 +159,3 @@ function IsEnd(row: number, column: number): boolean {
 function IsOver(): boolean {
   return ApiIsOver() == "1";
 }
-
-/*
-let bgm = new Audio("./audio/Time_Back.ogg");
-
-function PlayBGM() {
-  bgm.currentTime = 0;
-  bgm.loop = true;
-  bgm.play();
-}
-
-function MuteBGM() {
-  bgm.pause();
-}
-*/

@@ -33,7 +33,7 @@ void Init() {
   ulDestroySettings(settings);
   ulDestroyConfig(config);
   // Create our window, make it 500x500 with a titlebar and resize handles.
-  window = ulCreateWindow(ulAppGetMainMonitor(app), 1600, 900, false, kWindowFlags_Titled | kWindowFlags_Resizable);
+  window = ulCreateWindow(ulAppGetMainMonitor(app), 1600, 900, false, kWindowFlags_Titled | kWindowFlags_Resizable | kWindowFlags_Maximizable);
   // Set our window title.
   ulWindowSetTitle(window, "Plumber Game");
   // Register a callback to handle window close.
