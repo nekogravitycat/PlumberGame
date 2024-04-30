@@ -104,10 +104,30 @@ function Click(row: number, column: number) {
   // API
   ApiClick(row, column);
   DisplayBoard();
+  // Check if game is over
+  if (IsOver()) {
+    GameOver();
+  }
 }
 
 function GoHome() {
-  
+  ClearBoard();
+  clickCount = 0;
+  const homePage = document.getElementById("home-page");
+  const setupSpace = document.getElementById("setup-space");
+  const customSize = document.getElementById("custom-size");
+  const gamePage = document.getElementById("game-page");
+  if (!homePage || !setupSpace || !customSize || !gamePage) {
+    return;
+  }
+  homePage.style.display = "flex";
+  setupSpace.style.display = "flex";
+  customSize.style.display = "none";
+  gamePage.style.display = "none";
+}
+
+function GameOver(){
+
 }
 
 function GetRows(): number {
@@ -128,4 +148,8 @@ function IsStart(row: number, column: number): boolean {
 
 function IsEnd(row: number, column: number): boolean {
   return ApiIsEnd(row, column) == "1";
+}
+
+function IsOver(): boolean {
+  return ApiIsOver() == "1";
 }
