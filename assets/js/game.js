@@ -67,6 +67,10 @@ function DisplayBoard() {
         }
     }
 }
+function Mute() {
+    const audioElement = document.getElementById('background_music');
+    audioElement.muted = (audioElement.muted) ? false : true;
+}
 function ClearBoard() {
     const board = document.getElementById('board');
     if (!board) {
@@ -97,6 +101,8 @@ function Click(row, column) {
     // API
     ApiClick(row, column);
     DisplayBoard();
+}
+function GoHome() {
 }
 function GetRows() {
     return parseInt(ApiGetRows());
