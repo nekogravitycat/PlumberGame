@@ -110,6 +110,12 @@ public:
 		start.posX = inputX;
 		start.posY = inputY;
 	}
+
+	void setEnd(int inputX, int inputY) {
+		end.posX = inputX;
+		end.posY = inputY;
+	}
+
 	void Rotate(void) {
 		data[selection.posY][selection.posX].Rotate();
 	}

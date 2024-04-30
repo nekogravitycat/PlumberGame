@@ -252,6 +252,9 @@ private:
 		fileStream >> inputRows;
 		fileStream >> inputColumns;
 		pipeGame.setSize(inputColumns, inputRows);
+		pipeGame.setStart(0, 0);
+		pipeGame.setEnd(inputColumns - 1, inputRows - 1);
+
 		char** temp = new char*[inputRows * 3];
 
 		for(int i = 0; i < inputRows * 3; i++)
