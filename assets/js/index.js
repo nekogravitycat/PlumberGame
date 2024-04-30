@@ -82,6 +82,7 @@ function generateBoard() {
         for (let i = 0; i < boardCol; i++) {
             for (let j = 0; j < boardRow; j++) {
                 const img = document.createElement('img');
+                img.id = `${i}_${j}`;
                 if (getRandom(0, 1))
                     img.src = './image/cross.png';
                 else

@@ -1,6 +1,7 @@
 let boardCol: number = 1;
 let boardRow: number = 1;
 let water: boolean = false; 
+const pipeType: string[] = ["cross", "straight", "Tpose", "Lpose"]; 
 const gBoard = document.getElementById('board');
 const homePage = document.getElementById('home-page');
 const gamePage = document.getElementById('game-page');
@@ -33,7 +34,6 @@ function startRandom() {
     boardCol = getRandom(12, 3);
     boardRow = getRandom(12, 3);
     generateBoard();
-    
 }
 
 //the custom mode on the game
@@ -67,14 +67,15 @@ function clickSound() {
 }
 
 //click rotate image
-function clickPipe(img: HTMLImageElement) {
+function clickPipe(img: HTMLImageElement, angle: number) {
     clickSound();
-    const currentRotation = parseFloat(img.style.transform.replace('rotate(', '').replace('deg)', '')) || 0;
-    img.style.transform = `rotate(${currentRotation + 90}deg)`;
+    const currentRotation = angle * 90;
+    img.style.transform = `rotate(${currentRotation}deg)`;
 }
 
 //setup broad
 function generateBoard() {
+    GameStart(boardRow, boardCol);
     let countClick:number = 0;
     if (homePage && gamePage)
     {
@@ -94,18 +95,39 @@ function generateBoard() {
         for (let i = 0; i < boardCol; i++) {
             for (let j = 0; j < boardRow; j++) {
                 const img = document.createElement('img');
-    
-                if (getRandom(0, 1)) img.src = './image/cross.png';
-                else img.src = './image/straight.png';
+                img.id = `${i}_${j}`;
+                let info: string  = GetPipeInfo();
+                img.src = `./image/${pipeType[parseInt(info[0])]}.png`;
+                if (info[1]) img.src = `./image/water_${pipeType[parseInt(info[0])]}.png`;
 
                 img.onclick = () => {
                     countClick++;
                     if (countDisplay) countDisplay.textContent = `click: ${countClick}`;
-                    clickPipe(img);
+                    clickPipe(img, parseInt(info[1]));
                 }
                 gBoard.appendChild(img);
             }
         }
     }
+}
+
+function GameStart(row: number, column: number) {
+    ApiStartGame(row, column)
+}
+
+function GetPipeInfo(): string {
+    // It will consists of 3 char: Shape, rotation, water
+    // Shape:    0, 1, 2, 3
+    // Rotation: 0, 1, 2, 3
+    // Water:    0, 1
+    return ApiGetPipeInfo();
+}
+
+function Click(row: number, column: number) {
+    ApiClick(row, column);
+}
+
+function GameOver(): bool {
+    return ApiGameOver();
 }
 
