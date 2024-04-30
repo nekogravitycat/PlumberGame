@@ -149,8 +149,7 @@ public:
 		}
 	}
 
-	void setMapByInput(Pipe** forInput)
-	{
+	void setMapByInput(Pipe** forInput) {
 		for (int i = 0; i < row; i++) {
 			vector<Pipe> temp;
 			for (int j = 0; j < col; j++) {
@@ -196,7 +195,7 @@ public:
 		}
 
 		data[start.posY][start.posX].setcolor(207); // start position
-		data[route[route.size() - 1].posY][route[route.size() - 1].posX].setcolor(207); // end position
+		//data[route[route.size() - 1].posY][route[route.size() - 1].posX].setcolor(207); // end position
 		selection.posX = inputX;
 		selection.posY = inputY;
 		data[selection.posY][selection.posX].setcolor(237);

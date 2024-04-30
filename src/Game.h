@@ -64,8 +64,7 @@ public:
 		extendGraphic.Calculate_path();
 	}
 
-	void fileStartGameCore(void)
-	{
+	void fileStartGameCore(void) {
 		openFile("store.txt");
 		extendGraphic.input(pipeGame);
 		extendGraphic.setReference(&pipeGame);
@@ -135,119 +134,98 @@ private:
 		return true;
 	}
 
-	int whatIsIt(char compare[3][3])
-	{
+	int whatIsIt(char compare[3][3]) {
 		int count = 0, row = 0, col = 0, condition = 0;
 
-		for(int i = 0; i < 3; i++)
-		{
-			for(int j = 0; j < 3; j++)
-			{
-				if(compare[i][j] == '#')
-				{
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (compare[i][j] == '#') {
 					count++;
 				}
 			}
 		}
 
-		if(count == 6)
-		{
-			if(compare[1][0] == 'P' && compare[1][1] == 'P' && compare[1][2] == 'P')
-			{
+		if (count == 6) {
+			if (compare[1][0] == 'P' && compare[1][1] == 'P' && compare[1][2] == 'P') {
 				return 1;
 			}
 
-			if(compare[0][1] == 'P' && compare[1][1] == 'P' && compare[2][1] == 'P')
-			{
+			if (compare[0][1] == 'P' && compare[1][1] == 'P' && compare[2][1] == 'P') {
 				return 1;
 			}
 
 			return 3;
 		}
-		else if(count == 5)
-		{
+		else if (count == 5) {
 			return 2;
 		}
-		else if(count == 4)
-		{
+		else if (count == 4) {
 			return 0;
 		}
 
 		return 4;
 	}
 
-	int whatIsItRotation(char compare[3][3])
-	{
-		switch(whatIsIt(compare))
-		{
-			case 0:
+	int whatIsItRotation(char compare[3][3]) {
+		switch (whatIsIt(compare)) {
+		case 0:
+			return 0;
+			break;
+		case 1:
+			if (compare[1][0] == 'P' && compare[1][1] == 'P' && compare[1][2] == 'P') {
+				return 1;
+			}
+
+			if (compare[0][1] == 'P' && compare[1][1] == 'P' && compare[2][1] == 'P') {
 				return 0;
-				break;
-			case 1:
-				if(compare[1][0] == 'P' && compare[1][1] == 'P' && compare[1][2] == 'P')
-				{
-					return 1;
-				}
+			}
 
-				if(compare[0][1] == 'P' && compare[1][1] == 'P' && compare[2][1] == 'P')
-				{
-					return 0;
-				}
+			break;
+		case 2:
+			if (compare[0][1] == 'P' && compare[1][0] == 'P' && compare[1][1] == 'P' && compare[1][2] == 'P') {
+				return 0;
+			}
 
-				break;
-			case 2:
-				if(compare[0][1] == 'P' && compare[1][0] == 'P' && compare[1][1] == 'P' && compare[1][2] == 'P')
-				{
-					return 0;
-				}
+			if (compare[0][1] == 'P' && compare[2][1] == 'P' && compare[1][1] == 'P' && compare[1][2] == 'P') {
+				return 1;
+			}
 
-				if(compare[0][1] == 'P' && compare[2][1] == 'P' && compare[1][1] == 'P' && compare[1][2] == 'P')
-				{
-					return 1;
-				}
+			if (compare[2][1] == 'P' && compare[1][0] == 'P' && compare[1][1] == 'P' && compare[1][2] == 'P') {
+				return 2;
+			}
 
-				if(compare[2][1] == 'P' && compare[1][0] == 'P' && compare[1][1] == 'P' && compare[1][2] == 'P')
-				{
-					return 2;
-				}
+			if (compare[0][1] == 'P' && compare[1][0] == 'P' && compare[1][1] == 'P' && compare[2][1] == 'P') {
+				return 3;
+			}
 
-				if(compare[0][1] == 'P' && compare[1][0] == 'P' && compare[1][1] == 'P' && compare[2][1] == 'P')
-				{
-					return 3;
-				}
+			break;
+		case 3:
+			if (compare[0][1] == 'P' && compare[1][1] == 'P' && compare[1][2] == 'P') {
+				return 0;
+			}
 
-				break;
-			case 3:
-				if(compare[0][1] == 'P' && compare[1][1] == 'P' && compare[1][2] == 'P')
-				{
-					return 0;
-				}
+			if (compare[2][1] == 'P' && compare[1][1] == 'P' && compare[1][2] == 'P') {
+				return 1;
+			}
 
-				if(compare[2][1] == 'P' && compare[1][1] == 'P' && compare[1][2] == 'P')
-				{
-					return 1;
-				}
+			if (compare[1][0] == 'P' && compare[1][1] == 'P' && compare[2][1] == 'P') {
+				return 2;
+			}
 
-				if(compare[1][0] == 'P' && compare[1][1] == 'P' && compare[2][1] == 'P')
-				{
-					return 2;
-				}
+			if (compare[0][1] == 'P' && compare[1][1] == 'P' && compare[1][0] == 'P') {
+				return 3;
+			}
 
-				if(compare[0][1] == 'P' && compare[1][1] == 'P' && compare[1][0] == 'P')
-				{
-					return 3;
-				}
-
-				break;
-			default:
-				break;
+			break;
+		default:
+			break;
 		}
 
 		return 0;
 	}
 
-	void openFile(string fileName) // pls with .txt
-	{
+	// pls with .txt
+	void openFile(string fileName) {
 		fileStream.open(fileName);
 		fileStream >> inputRows;
 		fileStream >> inputColumns;
@@ -255,58 +233,49 @@ private:
 		pipeGame.setStart(0, 0);
 		pipeGame.setEnd(inputColumns - 1, inputRows - 1);
 
-		char** temp = new char*[inputRows * 3];
+		char** temp = new char* [inputRows * 3];
 
-		for(int i = 0; i < inputRows * 3; i++)
-		{
+		for (int i = 0; i < inputRows * 3; i++) {
 			temp[i] = new char[inputColumns * 3];
 		}
 
-		for(int i = 0; i < inputRows * 3; i++)
-		{
-			for(int j = 0; j < inputColumns * 3; j++)
-			{
+		for (int i = 0; i < inputRows * 3; i++) {
+			for (int j = 0; j < inputColumns * 3; j++) {
 				fileStream >> temp[i][j];
 			}
 		}
 
 		char compare[3][3];
-		Pipe** forInput = new Pipe*[inputRows];
+		Pipe** forInput = new Pipe * [inputRows];
 		pShape shape = CROSS;
 
-		for(int i = 0; i < inputRows; i++)
-		{
+		for (int i = 0; i < inputRows; i++) {
 			forInput[i] = new Pipe[inputColumns];
 		}
 
-		for(int i = 0; i < inputRows * 3; i = i + 3)
-		{
-			for(int j = 0; j < inputColumns * 3; j = j + 3)
-			{
-				for(int k = 0; k < 3; k++)
-				{
-					for(int l = 0; l < 3; l++)
-					{
+		for (int i = 0; i < inputRows * 3; i = i + 3) {
+			for (int j = 0; j < inputColumns * 3; j = j + 3) {
+				for (int k = 0; k < 3; k++) {
+					for (int l = 0; l < 3; l++) {
 						compare[k][l] = temp[i + k][j + l];
 					}
 				}
 
-				switch(whatIsIt(compare))
-				{
-					case 0:
-						shape = CROSS;
-						break;
-					case 1:
-						shape = STRA;
-						break;
-					case 2:
-						shape = TEE;
-						break;
-					case 3:
-						shape = ELBOW;
-						break;
-					default:
-						break;
+				switch (whatIsIt(compare)) {
+				case 0:
+					shape = CROSS;
+					break;
+				case 1:
+					shape = STRA;
+					break;
+				case 2:
+					shape = TEE;
+					break;
+				case 3:
+					shape = ELBOW;
+					break;
+				default:
+					break;
 				}
 
 				forInput[i / 3][j / 3].SetShape(shape);
