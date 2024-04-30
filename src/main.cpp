@@ -136,8 +136,28 @@ JSValueRef ApiIsOver(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObj
   JSStringRef str = JSStringCreateWithUTF8CString(info.c_str());
   JSValueRef value = JSValueMakeString(ctx, str);
   JSStringRelease(str);
+  if (game.isItGameOver()) {
+    PlaySound(0, 0, 0);
+  }
   return value;
 }
+
+JSValueRef ApiPlayBGM(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
+  PlaySound(TEXT("./assets/sound/bgm.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+  return JSValueMakeNull(ctx);
+}
+
+JSValueRef ApiStopBGM(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
+  PlaySound(0, 0, 0);
+  return JSValueMakeNull(ctx);
+}
+
+JSValueRef ApiReadFile(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
+  game = Game();
+  game.fileStartGameCore();
+  return JSValueMakeNull(ctx);
+}
+
 
 // This is called when the page has finished parsing the document and is ready to execute scripts.
 // We will use this event to set up our JavaScript <-> C callback.
@@ -185,6 +205,21 @@ void OnDOMReady(void* user_data, ULView caller, unsigned long long frame_id,
   func = JSObjectMakeFunctionWithCallback(ctx, name, ApiGetPipeInfo);
   JSObjectSetProperty(ctx, JSContextGetGlobalObject(ctx), name, func, 0, 0);
   JSStringRelease(name);
+  // PlayBGM
+  name = JSStringCreateWithUTF8CString("ApiPlayBGM");
+  func = JSObjectMakeFunctionWithCallback(ctx, name, ApiPlayBGM);
+  JSObjectSetProperty(ctx, JSContextGetGlobalObject(ctx), name, func, 0, 0);
+  JSStringRelease(name);
+  // StopBGM
+  name = JSStringCreateWithUTF8CString("ApiStopBGM");
+  func = JSObjectMakeFunctionWithCallback(ctx, name, ApiStopBGM);
+  JSObjectSetProperty(ctx, JSContextGetGlobalObject(ctx), name, func, 0, 0);
+  JSStringRelease(name);
+  // ReadFile
+  name = JSStringCreateWithUTF8CString("ApiReadFile");
+  func = JSObjectMakeFunctionWithCallback(ctx, name, ApiReadFile);
+  JSObjectSetProperty(ctx, JSContextGetGlobalObject(ctx), name, func, 0, 0);
+  JSStringRelease(name);
   // Unlock the JS context so other threads can modify JavaScript state.
   ulViewUnlockJSContext(view);
 }
@@ -196,7 +231,6 @@ void Shutdown() {
 }
 
 int main() {
-  PlaySound(TEXT("../assets/sound/bgm.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
   Init();
   ulAppRun(app);
   Shutdown();

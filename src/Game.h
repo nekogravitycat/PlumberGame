@@ -65,7 +65,7 @@ public:
 	}
 
 	void fileStartGameCore(void) {
-		openFile("store.txt");
+		openFile("./assets/store.txt");
 		extendGraphic.input(pipeGame);
 		extendGraphic.setReference(&pipeGame);
 		extendGraphic.create();
@@ -115,7 +115,6 @@ private:
 	char keyBoard;
 	Map pipeGame;
 	Navigate extendGraphic;
-	ifstream fileStream;
 
 	void printInfo(void) {
 		cout << "(W) (A) (S) (D) to change which Pipe you want to select" << endl;
@@ -226,7 +225,10 @@ private:
 
 	// pls with .txt
 	void openFile(string fileName) {
-		fileStream.open(fileName);
+		ifstream fileStream(fileName);
+		if (fileStream.fail()) {
+			exit(1);
+		}
 		fileStream >> inputRows;
 		fileStream >> inputColumns;
 		pipeGame.setSize(inputColumns, inputRows);

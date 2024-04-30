@@ -152,7 +152,7 @@ public:
 	}
 
 	void print() {
-		ofstream ofs("board.txt");
+		//ofstream ofs("board.txt");
 
 		for (int i = 0; i < originalMap.getRow() * 3; i++) {
 			for (int j = 0; j < originalMap.getColumn() * 3; j++) {
@@ -166,14 +166,14 @@ public:
 				}
 
 				cout << control[i][j];
-				ofs << control[i][j];
+				//ofs << control[i][j];
 			}
 
 			SetColor(7);
 			cout << endl;
-			ofs << endl;
+			//ofs << endl;
 		}
 
-		ofs.close();
+		//ofs.close();
 	}
 };

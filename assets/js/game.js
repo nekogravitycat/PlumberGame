@@ -84,6 +84,7 @@ function StartGame(rows, columns) {
     gamePage.style.display = "flex";
     ApiStartGame(rows, columns);
     DisplayBoard();
+    ApiPlayBGM();
 }
 let clickCount = 0;
 function Click(row, column) {
@@ -118,6 +119,10 @@ function GoHome() {
     customSize.style.display = "none";
     gamePage.style.display = "none";
     winPage.style.display = "none";
+    ApiStopBGM();
+}
+function ShutUp() {
+    ApiStopBGM();
 }
 function GameOver() {
     const gamePage = document.getElementById("game-page");
@@ -126,6 +131,18 @@ function GameOver() {
         return;
     gamePage.style.display = "none";
     winPage.style.display = "flex";
+}
+function FileStart() {
+    ApiReadFile();
+    const homePage = document.getElementById("home-page");
+    const gamePage = document.getElementById("game-page");
+    if (!homePage || !gamePage) {
+        return;
+    }
+    homePage.style.display = "none";
+    gamePage.style.display = "flex";
+    DisplayBoard();
+    ApiPlayBGM();
 }
 function GetRows() {
     return parseInt(ApiGetRows());
