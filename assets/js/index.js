@@ -90,8 +90,8 @@ function generateBoard() {
             for (let j = 0; j < boardRow; j++) {
                 const img = document.createElement('img');
                 img.id = `${i}_${j}`;
-                let info = "101";
-                if (info[1])
+                let info = "100";
+                if (info[2])
                     img.src = `./image/water_${pipeType[parseInt(info[0])]}.png`;
                 else
                     img.src = `./image/${pipeType[parseInt(info[0])]}.png`;
