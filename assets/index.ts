@@ -16,7 +16,10 @@ const startButton = document.getElementById('enter-button');
 
 buttonRandom?.addEventListener('click', startRandom);
 buttonCustom?.addEventListener('click', startCustom);
-startButton?.addEventListener('click', generateBoard);
+startButton?.addEventListener('click', function () {
+    if (boardCol > 3 && boardRow > 3) GameStart(boardRow, boardCol);
+    generateBoard();
+});
 buttonHome?.addEventListener('click', function () {
     if (gBoard) gBoard.innerHTML = '';
     if (homePage && gamePage && inputPart && buttonPart)
@@ -51,7 +54,7 @@ function startCustom() {
             boardCol = parseInt(inputCol.value);
         })
     }
-    
+    if (boardCol > 3 && boardRow > 3) GameStart(boardRow, boardCol);
 }
 
 //set random
@@ -75,7 +78,6 @@ function clickPipe(img: HTMLImageElement, angle: number) {
 
 //setup broad
 function generateBoard() {
-    GameStart(boardRow, boardCol);
     let countClick:number = 0;
     if (homePage && gamePage)
     {
