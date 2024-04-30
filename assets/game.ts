@@ -7,16 +7,19 @@
  * Description: make the element work on the page
 ***********************************************************************/
 
+//create a random number within the range
 function RandomNumber(min: number, max: number) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
+//start game with randon board
 function RandomStart() {
   const rows = RandomNumber(5, 15);
   const columns = RandomNumber(5, 15);
   StartGame(rows, columns);
 }
 
+//change to the page that you can input the row and column
 function CustomMenu() {
   const setupSpace = document.getElementById("setup-space");
   const customSize = document.getElementById("custom-size");
@@ -27,6 +30,7 @@ function CustomMenu() {
   customSize.style.display = "flex";
 }
 
+//start game with the board you set
 function CustomStart() {
   const rowInput = document.getElementById("Row-input") as HTMLInputElement;
   const columnInput = document.getElementById("Column-input") as HTMLInputElement;
@@ -38,12 +42,15 @@ function CustomStart() {
   }
   const rows: number = parseInt(rowInput.value);
   const columns: number = parseInt(columnInput.value);
+
+  //set a range of row and column
   if (rows < 5 || rows > 30 || columns < 5 || columns > 30) {
     return;
   }
   StartGame(rows, columns);
 }
 
+//print the board on the page
 function DisplayBoard() {
   const rows: number = GetRows();
   const columns: number = GetColumns();
@@ -51,6 +58,8 @@ function DisplayBoard() {
   if (!board) {
     return;
   }
+
+  //Use grid to arrange each img
   const imageSize: number = (rows < 15 && columns < 15) ? 50 : 25;
   board.style.gridTemplateRows = `repeat(${rows}, ${imageSize}px)`;
   board.style.gridTemplateColumns = `repeat(${columns}, ${imageSize}px)`;
@@ -80,6 +89,7 @@ function DisplayBoard() {
   }
 }
 
+//clean the board
 function ClearBoard() {
   const board = document.getElementById('board');
   if (!board) {
@@ -88,6 +98,7 @@ function ClearBoard() {
   board.innerHTML = "";
 }
 
+//start game
 function StartGame(rows: number, columns: number) {
   const homePage = document.getElementById("home-page");
   const gamePage = document.getElementById("game-page");
@@ -103,6 +114,7 @@ function StartGame(rows: number, columns: number) {
 
 let clickCount: number = 0;
 
+//Action on click
 function Click(row: number, column: number) {
   ClearBoard();
   // Count display
@@ -120,6 +132,7 @@ function Click(row: number, column: number) {
   }
 }
 
+//back to homepage
 function GoHome() {
   ClearBoard();
   clickCount = 0;
@@ -139,10 +152,12 @@ function GoHome() {
   ApiStopBGM();
 }
 
+//close the bgm
 function ShutUp() {
   ApiStopBGM();
 }
 
+//action on gameover
 function GameOver() {
   const gamePage = document.getElementById("game-page");
   const winPage = document.getElementById("win-page");
@@ -151,6 +166,7 @@ function GameOver() {
   winPage.style.display = "flex";
 }
 
+//start game with the board on the file
 function FileStart() {
   ApiReadFile();
   const homePage = document.getElementById("home-page");
@@ -164,22 +180,27 @@ function FileStart() {
   ApiPlayBGM();
 }
 
+//get row
 function GetRows(): number {
   return parseInt(ApiGetRows());
 }
 
+//get column
 function GetColumns(): number {
   return parseInt(ApiGetColumns());
 }
 
+//get any information of each pipe
 function GetPipeInfo(row: number, column: number): string {
   return ApiGetPipeInfo(row, column);
 }
 
+//find the fisrt pipe
 function IsStart(row: number, column: number): boolean {
   return ApiIsStart(row, column) == "1";
 }
 
+//find the last pipe
 function IsEnd(row: number, column: number): boolean {
   return ApiIsEnd(row, column) == "1";
 }
