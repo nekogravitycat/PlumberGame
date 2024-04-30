@@ -69,7 +69,7 @@ function clickSound() {
 //click rotate image
 function clickPipe(img, angle) {
     clickSound();
-    const currentRotation = angle * 90;
+    let currentRotation = 1 * 90;
     img.style.transform = `rotate(${currentRotation}deg)`;
 }
 //setup broad

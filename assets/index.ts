@@ -72,7 +72,7 @@ function clickSound() {
 //click rotate image
 function clickPipe(img: HTMLImageElement, angle: number) {
     clickSound();
-    const currentRotation = angle * 90;
+    let currentRotation = angle * 90;
     img.style.transform = `rotate(${currentRotation}deg)`;
 }
 
@@ -98,7 +98,7 @@ function generateBoard() {
             for (let j = 0; j < boardRow; j++) {
                 const img = document.createElement('img');
                 img.id = `${i}_${j}`;
-                let info: string  = "100";
+                let info: string  = GetPipeInfo(j, i);
                 if (parseInt(info[2])) img.src = `./image/water_${pipeType[parseInt(info[0])]}.png`;
                 else img.src = `./image/${pipeType[parseInt(info[0])]}.png`;
                 
