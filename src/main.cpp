@@ -158,7 +158,6 @@ JSValueRef ApiReadFile(JSContextRef ctx, JSObjectRef function, JSObjectRef thisO
   return JSValueMakeNull(ctx);
 }
 
-
 // This is called when the page has finished parsing the document and is ready to execute scripts.
 // We will use this event to set up our JavaScript <-> C callback.
 void OnDOMReady(void* user_data, ULView caller, unsigned long long frame_id,
