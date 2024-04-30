@@ -133,7 +133,7 @@ function GoHome() {
 
 function GameOver(){
   const gamePage = document.getElementById("game-page");
-  const winPage = document.getElementById("home-page");
+  const winPage = document.getElementById("win-page");
   if (!winPage || !gamePage) return;
   gamePage.style.display = "none";
   winPage.style.display = "flex";
