@@ -36,6 +36,7 @@ buttonHome?.addEventListener('click', function () {
 function startRandom() {  
     boardCol = getRandom(12, 3);
     boardRow = getRandom(12, 3);
+    if (boardCol > 3 && boardRow > 3) GameStart(boardRow, boardCol);
     generateBoard();
 }
 
@@ -72,8 +73,7 @@ function clickSound() {
 //click rotate image
 function clickPipe(img: HTMLImageElement, angle: number) {
     clickSound();
-    let currentRotation = angle * 90;
-    img.style.transform = `rotate(${currentRotation}deg)`;
+    
 }
 
 //setup broad
@@ -101,7 +101,8 @@ function generateBoard() {
                 let info: string  = GetPipeInfo(j, i);
                 if (parseInt(info[2])) img.src = `./image/water_${pipeType[parseInt(info[0])]}.png`;
                 else img.src = `./image/${pipeType[parseInt(info[0])]}.png`;
-                
+                let currentRotation = parseInt(info[1]) * 90;
+                img.style.transform = `rotate(${currentRotation}deg)`;
                 img.onclick = () => {
                     countClick++;
                     if (countDisplay) countDisplay.textContent = `click: ${countClick}`;
