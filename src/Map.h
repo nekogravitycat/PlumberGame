@@ -110,6 +110,12 @@ public:
 		start.posX = inputX;
 		start.posY = inputY;
 	}
+
+	void setEnd(int inputX, int inputY) {
+		end.posX = inputX;
+		end.posY = inputY;
+	}
+
 	void Rotate(void) {
 		data[selection.posY][selection.posX].Rotate();
 	}
@@ -143,6 +149,39 @@ public:
 		}
 	}
 
+	void setMapByInput(Pipe** forInput) {
+		for (int i = 0; i < row; i++) {
+			vector<Pipe> temp;
+			for (int j = 0; j < col; j++) {
+				Pipe x;
+				pShape psh = CROSS;
+
+				switch (forInput[i][j].GetShape()) {
+				case 0: // +
+					psh = CROSS;
+					break;
+				case 1: // |
+					psh = STRA;
+					break;
+				case 2: // T
+					psh = TEE;
+					break;
+				case 3: // L
+					psh = ELBOW;
+					break;
+				default:
+					break;
+				}
+
+				x.SetShape(psh);
+				x.SetRotation(forInput[i][j].GetRotation());
+				temp.push_back(x);
+			}
+
+			data.push_back(temp);
+		}
+	}
+
 	Position& getSelection(void) {
 		return selection;
 	}
@@ -156,7 +195,7 @@ public:
 		}
 
 		data[start.posY][start.posX].setcolor(207); // start position
-		data[route[route.size() - 1].posY][route[route.size() - 1].posX].setcolor(207); // end position
+		//data[route[route.size() - 1].posY][route[route.size() - 1].posX].setcolor(207); // end position
 		selection.posX = inputX;
 		selection.posY = inputY;
 		data[selection.posY][selection.posX].setcolor(237);

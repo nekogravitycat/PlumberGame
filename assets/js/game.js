@@ -67,10 +67,6 @@ function DisplayBoard() {
         }
     }
 }
-const audioElement = document.getElementById('background_music');
-function Mute() {
-    audioElement.muted = (audioElement.muted) ? false : true;
-}
 function ClearBoard() {
     const board = document.getElementById('board');
     if (!board) {
@@ -81,7 +77,6 @@ function ClearBoard() {
 function StartGame(rows, columns) {
     const homePage = document.getElementById("home-page");
     const gamePage = document.getElementById("game-page");
-    audioElement.play();
     if (!homePage || !gamePage) {
         return;
     }
@@ -89,6 +84,8 @@ function StartGame(rows, columns) {
     gamePage.style.display = "flex";
     ApiStartGame(rows, columns);
     DisplayBoard();
+    let bgm = new Audio("../audio/bgm.mp3");
+    bgm.play();
 }
 let clickCount = 0;
 function Click(row, column) {
@@ -109,7 +106,7 @@ function Click(row, column) {
 }
 function GoHome() {
     ClearBoard();
-    audioElement.pause();
+    bgm.pause();
     clickCount = 0;
     const homePage = document.getElementById("home-page");
     const setupSpace = document.getElementById("setup-space");
@@ -124,6 +121,7 @@ function GoHome() {
     customSize.style.display = "none";
     gamePage.style.display = "none";
     winPage.style.display = "none";
+    MuteBGM();
 }
 function GameOver() {
     const gamePage = document.getElementById("game-page");
@@ -151,3 +149,16 @@ function IsEnd(row, column) {
 function IsOver() {
     return ApiIsOver() == "1";
 }
+/*
+let bgm = new Audio("./audio/Time_Back.ogg");
+
+function PlayBGM() {
+  bgm.currentTime = 0;
+  bgm.loop = true;
+  bgm.play();
+}
+
+function MuteBGM() {
+  bgm.pause();
+}
+*/ 
