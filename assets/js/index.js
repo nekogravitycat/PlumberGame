@@ -2,6 +2,7 @@
 let boardCol = 1;
 let boardRow = 1;
 let water = false;
+const pipeType = ["cross", "straight", "Tpose", "Lpose"];
 const gBoard = document.getElementById('board');
 const homePage = document.getElementById('home-page');
 const gamePage = document.getElementById('game-page');
@@ -60,13 +61,14 @@ function clickSound() {
     audio.play();
 }
 //click rotate image
-function clickPipe(img) {
+function clickPipe(img, angle) {
     clickSound();
-    const currentRotation = parseFloat(img.style.transform.replace('rotate(', '').replace('deg)', '')) || 0;
-    img.style.transform = `rotate(${currentRotation + 90}deg)`;
+    const currentRotation = angle * 90;
+    img.style.transform = `rotate(${currentRotation}deg)`;
 }
 //setup broad
 function generateBoard() {
+    GameStart(boardRow, boardCol);
     let countClick = 0;
     if (homePage && gamePage) {
         homePage.style.display = 'none';
@@ -83,18 +85,35 @@ function generateBoard() {
             for (let j = 0; j < boardRow; j++) {
                 const img = document.createElement('img');
                 img.id = `${i}_${j}`;
-                if (getRandom(0, 1))
-                    img.src = './image/cross.png';
+                let info = GetPipeInfo();
+                if (info[1])
+                    img.src = `./image/water_${pipeType[parseInt(info[0])]}.png`;
                 else
-                    img.src = './image/straight.png';
+                    img.src = `./image/${pipeType[parseInt(info[0])]}.png`;
                 img.onclick = () => {
                     countClick++;
                     if (countDisplay)
                         countDisplay.textContent = `click: ${countClick}`;
-                    clickPipe(img);
+                    clickPipe(img, parseInt(info[1]));
                 };
                 gBoard.appendChild(img);
             }
         }
     }
+}
+function GameStart(row, column) {
+    ApiStartGame(row, column);
+}
+function GetPipeInfo() {
+    // It will consists of 3 char: Shape, rotation, water
+    // Shape:    0, 1, 2, 3
+    // Rotation: 0, 1, 2, 3
+    // Water:    0, 1
+    return ApiGetPipeInfo();
+}
+function Click(row, column) {
+    ApiClick(row, column);
+}
+function GameOver() {
+    return ApiGameOver();
 }
