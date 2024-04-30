@@ -83,8 +83,11 @@ JSValueRef ApiClick(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObje
 JSValueRef ApiGetPipeInfo(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
   int row = JSValueToNumber(ctx, arguments[0], exception);
   int column = JSValueToNumber(ctx, arguments[1], exception);
-  int info = game.GetPipeInfo(row, column);
-  JSStringRef str = JSStringCreateWithUTF8CString(to_string(info).c_str());
+  string info = to_string(game.GetPipeInfo(row, column));
+  while (info.length() < 3) {
+    info = "0" + info;
+  }
+  JSStringRef str = JSStringCreateWithUTF8CString(info.c_str());
   JSValueRef value = JSValueMakeString(ctx, str);
   JSStringRelease(str);
   return value;
