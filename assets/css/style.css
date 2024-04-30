@@ -164,23 +164,40 @@ body {
     background-size: cover;
 }
 
-.win-page .title {
+.win-page .win-board {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 30px;
-    padding: 15px;
-    font-family: sans-serif;
-    font-size: 80px;
-    background-color: bisque;
-    color: black;
-    border: 10px solid orange;
+    justify-content: center;
+    padding: 20px;
+    font-size: 70px;
+    font-weight: bold;
+    width: 500px;
+    height: 300px;
+    background-color: rgb(249, 187, 1);
     border-radius: 20px;
-    transition: all 1250ms cubic-bezier(0.4, 0.2, 0.2, 1);
+    transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+
 }
 
-.win-page .icon {
-    width: 50px;
-    height: 50px;
-    
+.win-page .restart {
+    margin-top: 40px;
+    padding: 20px;
+    font-size: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    box-shadow: inset 0 5px rgba(233, 178, 59, 0.5), 0 0 20px rgba(225, 51, 45, 0.2);
+    border-radius: 20px;
+    background-color: bisque;
+    transition: 500ms;
+}
+
+.win-page .restart:hover {
+    border: 4px rgb(182, 135, 74);
+    box-shadow: inset 0 7px rgba(233, 178, 59, 0.5), 0 inset 20px rgba(225, 51, 45, 0.2);
+    transform: scale(1.5);
+}
+
+.win-page .restart:active {
+    transform: perspective(200px) rotateX(45deg);
 }

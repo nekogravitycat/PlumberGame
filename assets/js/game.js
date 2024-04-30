@@ -84,7 +84,7 @@ function StartGame(rows, columns) {
     gamePage.style.display = "flex";
     ApiStartGame(rows, columns);
     DisplayBoard();
-    let bgm = new Audio("../audio/bgm.mp3");
+    let bgm = new Audio("./audio/bgm.mp3");
     bgm.play();
 }
 let clickCount = 0;
