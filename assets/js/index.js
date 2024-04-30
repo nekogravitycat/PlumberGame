@@ -2,15 +2,32 @@
 let boardCol = 1;
 let boardRow = 1;
 let water = false;
+const gBoard = document.getElementById('board');
 const homePage = document.getElementById('home-page');
 const gamePage = document.getElementById('game-page');
+const buttonPart = document.getElementById('setup-space');
+const inputPart = document.getElementById('custom-size');
+const countDisplay = document.getElementById('count');
+const buttonHome = document.getElementById('iconHome');
+const buttonMute = document.getElementById('iconMute');
 const buttonRandom = document.getElementById('Random-button');
 const buttonCustom = document.getElementById('Custom-button');
 const startButton = document.getElementById('enter-button');
-const gBoard = document.getElementById('board');
 buttonRandom === null || buttonRandom === void 0 ? void 0 : buttonRandom.addEventListener('click', startRandom);
 buttonCustom === null || buttonCustom === void 0 ? void 0 : buttonCustom.addEventListener('click', startCustom);
 startButton === null || startButton === void 0 ? void 0 : startButton.addEventListener('click', generateBoard);
+buttonHome === null || buttonHome === void 0 ? void 0 : buttonHome.addEventListener('click', function () {
+    if (gBoard)
+        gBoard.innerHTML = '';
+    if (homePage && gamePage && inputPart && buttonPart) {
+        if (countDisplay)
+            countDisplay.textContent = `click: 0`;
+        buttonPart.style.display = 'flex';
+        inputPart.style.display = 'none';
+        homePage.style.display = 'flex';
+        gamePage.style.display = 'none';
+    }
+});
 //the random mode on the game
 function startRandom() {
     boardCol = getRandom(12, 3);
@@ -19,8 +36,6 @@ function startRandom() {
 }
 //the custom mode on the game
 function startCustom() {
-    const buttonPart = document.getElementById('setup-space');
-    const inputPart = document.getElementById('custom-size');
     const inputRow = document.getElementById('Row-input');
     const inputCol = document.getElementById('Column-input');
     if (homePage && gamePage && inputPart && buttonPart) {
@@ -44,6 +59,7 @@ function clickSound() {
     audio.src = './audio/rotate_sound.mp3';
     audio.play();
 }
+//click rotate image
 function clickPipe(img) {
     clickSound();
     const currentRotation = parseFloat(img.style.transform.replace('rotate(', '').replace('deg)', '')) || 0;
@@ -51,7 +67,7 @@ function clickPipe(img) {
 }
 //setup broad
 function generateBoard() {
-    let count = 0;
+    let countClick = 0;
     if (homePage && gamePage) {
         homePage.style.display = 'none';
         gamePage.style.display = 'flex';
@@ -71,6 +87,9 @@ function generateBoard() {
                 else
                     img.src = './image/straight.png';
                 img.onclick = () => {
+                    countClick++;
+                    if (countDisplay)
+                        countDisplay.textContent = `click: ${countClick}`;
                     clickPipe(img);
                 };
                 gBoard.appendChild(img);

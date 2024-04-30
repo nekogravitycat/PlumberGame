@@ -1,18 +1,32 @@
 let boardCol: number = 1;
 let boardRow: number = 1;
 let water: boolean = false; 
+const gBoard = document.getElementById('board');
 const homePage = document.getElementById('home-page');
 const gamePage = document.getElementById('game-page');
+const buttonPart = document.getElementById('setup-space');
+const inputPart = document.getElementById('custom-size');
+const countDisplay = document.getElementById('count');
+const buttonHome = document.getElementById('iconHome');
+const buttonMute = document.getElementById('iconMute');
 const buttonRandom = document.getElementById('Random-button');
 const buttonCustom = document.getElementById('Custom-button');
 const startButton = document.getElementById('enter-button');
-const gBoard = document.getElementById('board');
 
 buttonRandom?.addEventListener('click', startRandom);
-
 buttonCustom?.addEventListener('click', startCustom);
-
 startButton?.addEventListener('click', generateBoard);
+buttonHome?.addEventListener('click', function () {
+    if (gBoard) gBoard.innerHTML = '';
+    if (homePage && gamePage && inputPart && buttonPart)
+    {
+        if (countDisplay) countDisplay.textContent = `click: 0`
+        buttonPart.style.display = 'flex';
+        inputPart.style.display = 'none';
+        homePage.style.display = 'flex';
+        gamePage.style.display = 'none';
+    }
+})
 
 //the random mode on the game
 function startRandom() {  
@@ -24,8 +38,6 @@ function startRandom() {
 
 //the custom mode on the game
 function startCustom() {
-    const buttonPart = document.getElementById('setup-space');
-    const inputPart = document.getElementById('custom-size');
     const inputRow = document.getElementById('Row-input') as HTMLInputElement;
     const inputCol = document.getElementById('Column-input') as HTMLInputElement;
     if (homePage && gamePage && inputPart && buttonPart)
@@ -54,6 +66,7 @@ function clickSound() {
     audio.play();
 }
 
+//click rotate image
 function clickPipe(img: HTMLImageElement) {
     clickSound();
     const currentRotation = parseFloat(img.style.transform.replace('rotate(', '').replace('deg)', '')) || 0;
@@ -62,16 +75,19 @@ function clickPipe(img: HTMLImageElement) {
 
 //setup broad
 function generateBoard() {
-    let count:number = 0;
+    let countClick:number = 0;
     if (homePage && gamePage)
-        {
-            homePage.style.display = 'none';
-            gamePage.style.display = 'flex';
-        }
-    if (gBoard) {
+    {
+        homePage.style.display = 'none';
+        gamePage.style.display = 'flex';
+    }
+    if (gBoard) 
+    {
         gBoard.style.display = 'grid';
         let imgSize = 50;
+
         if (boardCol > 15 || boardRow > 15) imgSize = 25;
+
         gBoard.style.gridTemplateColumns = `repeat(${boardCol}, ${imgSize}px)`;
         gBoard.style.gridTemplateRows = `repeat(${boardRow}, ${imgSize}px)`;
     
@@ -81,8 +97,10 @@ function generateBoard() {
     
                 if (getRandom(0, 1)) img.src = './image/cross.png';
                 else img.src = './image/straight.png';
+
                 img.onclick = () => {
-                    
+                    countClick++;
+                    if (countDisplay) countDisplay.textContent = `click: ${countClick}`;
                     clickPipe(img);
                 }
                 gBoard.appendChild(img);
