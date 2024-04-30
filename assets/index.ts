@@ -55,7 +55,6 @@ function startCustom() {
             boardCol = parseInt(inputCol.value);
         })
     }
-    if (boardCol > 3 && boardRow > 3) GameStart(boardRow, boardCol);
 }
 
 //set random
