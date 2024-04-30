@@ -62,6 +62,36 @@ class Game
             inputColumns = col;
         }
 
+        void startGameCore(int row, int col)
+        {
+            pipeGame.setSize(row, col);
+            pipeGame.startOperate();
+            extendGraphic.input(pipeGame);
+            extendGraphic.setReference(&pipeGame);
+            extendGraphic.create();
+            extendGraphic.Calculate_path();
+        }
+
+        int GetPipeInfo(int row, int col) {
+            Pipe pipe = pipeGame.getPipeData(col, row);
+            int shape = pipe.GetShape();
+            int rotation = pipe.GetRotation();
+            int water = pipe.getWater();
+            int info = shape * 100 + rotation * 10 + water;
+            return info;
+        }
+
+        void Click(int row, int col) {
+            pipeGame.setSelection(row, col);
+            pipeGame.Rotate();
+            extendGraphic.input(pipeGame);
+            extendGraphic.update();
+            extendGraphic.Calculate_path();
+            system("CLS");
+            extendGraphic.print();
+            printInfo();
+        }
+
     private:
         int inputColumns, inputRows;
         char keyBoard;
