@@ -146,4 +146,11 @@ body {
     height: 50px;
 }
 
+.game-page .icon:hover {
+    background-color: rgb(0, 102, 255);
+    padding: 5px;
+    box-shadow: 0 0 10px rgba(59, 88, 233, 0.5), 0 0 20px rgba(225, 51, 45, 0.2);
+    border-radius: 20px;
+}
+
 .game-page .win-message {}

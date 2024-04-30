@@ -67,8 +67,8 @@ function DisplayBoard() {
         }
     }
 }
+const audioElement = document.getElementById('background_music');
 function Mute() {
-    const audioElement = document.getElementById('background_music');
     audioElement.muted = (audioElement.muted) ? false : true;
 }
 function ClearBoard() {
@@ -81,6 +81,7 @@ function ClearBoard() {
 function StartGame(rows, columns) {
     const homePage = document.getElementById("home-page");
     const gamePage = document.getElementById("game-page");
+    audioElement.play();
     if (!homePage || !gamePage) {
         return;
     }
@@ -108,6 +109,7 @@ function Click(row, column) {
 }
 function GoHome() {
     ClearBoard();
+    audioElement.pause();
     clickCount = 0;
     const homePage = document.getElementById("home-page");
     const setupSpace = document.getElementById("setup-space");
@@ -123,7 +125,7 @@ function GoHome() {
 }
 function GameOver() {
     const gamePage = document.getElementById("game-page");
-    const winPage = document.getElementById("home-page");
+    const winPage = document.getElementById("win-page");
     if (!winPage || !gamePage)
         return;
     gamePage.style.display = "none";

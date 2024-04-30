@@ -71,8 +71,8 @@ function DisplayBoard() {
   }
 }
 
+const audioElement = document.getElementById('background_music') as HTMLMediaElement;
 function Mute() {
-  const audioElement = document.getElementById('background_music') as HTMLMediaElement;
   audioElement.muted = (audioElement.muted)? false : true;
 }
 
@@ -87,6 +87,8 @@ function ClearBoard() {
 function StartGame(rows: number, columns: number) {
   const homePage = document.getElementById("home-page");
   const gamePage = document.getElementById("game-page");
+  audioElement.play();
+
   if (!homePage || !gamePage) {
     return;
   }
@@ -117,6 +119,7 @@ function Click(row: number, column: number) {
 
 function GoHome() {
   ClearBoard();
+  audioElement.pause();
   clickCount = 0;
   const homePage = document.getElementById("home-page");
   const setupSpace = document.getElementById("setup-space");
