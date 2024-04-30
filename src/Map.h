@@ -85,10 +85,10 @@ public:
 
 	// if we do not setup col and row when we create Map object, we setup here
 	// it also setup starting position
-	void setSize(int inputCol, int inputRow) {
+	void setSize(int inputRow, int inputCol) {
 		srand(time(0));
-		col = inputCol;   //X
 		row = inputRow;   //Y
+		col = inputCol;   //X
 		start.posX = 0;
 		start.posY = rand() % row;
 
