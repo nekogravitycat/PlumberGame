@@ -122,8 +122,12 @@ function GoHome() {
     gamePage.style.display = "none";
 }
 function GameOver() {
-}
-function GoHome() {
+    const gamePage = document.getElementById("game-page");
+    const winPage = document.getElementById("home-page");
+    if (!winPage || !gamePage)
+        return;
+    gamePage.style.display = "none";
+    winPage.style.display = "flex";
 }
 function GetRows() {
     return parseInt(ApiGetRows());
