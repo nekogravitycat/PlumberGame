@@ -113,17 +113,19 @@ function GoHome() {
     const setupSpace = document.getElementById("setup-space");
     const customSize = document.getElementById("custom-size");
     const gamePage = document.getElementById("game-page");
-    if (!homePage || !setupSpace || !customSize || !gamePage) {
+    const winPage = document.getElementById("win-page");
+    if (!homePage || !setupSpace || !customSize || !gamePage || !winPage) {
         return;
     }
     homePage.style.display = "flex";
     setupSpace.style.display = "flex";
     customSize.style.display = "none";
     gamePage.style.display = "none";
+    winPage.style.display = "none";
 }
 function GameOver() {
     const gamePage = document.getElementById("game-page");
-    const winPage = document.getElementById("home-page");
+    const winPage = document.getElementById("win-page");
     if (!winPage || !gamePage)
         return;
     gamePage.style.display = "none";
