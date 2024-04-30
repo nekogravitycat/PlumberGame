@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
-project(MyApp C CXX)
+project(PlumberGame C CXX)
 
 include(cmake/App.cmake)
 
 set(SOURCES "src/main.cpp"
+            "src/main.h"
             "src/Color.cpp"
             "src/Color.h"
             "src/Game.cpp"

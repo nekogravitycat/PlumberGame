@@ -1,18 +1,12 @@
 /***********************************************************************
  * File: main.cpp
- * Author: B11230034
+ * Author: Gravity cat
  * Create Date: 2024/5/1
- * Editor: B11230034
+ * Editor: Gravity cat
  * Update Date: 2024/5/1
  * Description: A plumber game
 ***********************************************************************/
-#include <AppCore/CAPI.h>
-#include <JavaScriptCore/JavaScript.h>
-#include "Game.h"
-#include <iostream>
-#include <string>
-#include <Windows.h>
-#include <mmsystem.h>
+#include "main.h"
 
 #pragma comment(lib, "Winmm.lib")
 
@@ -24,15 +18,6 @@ ULApp app = 0;
 ULWindow window = 0;
 ULOverlay overlay = 0;
 ULView view = 0;
-
-// Forward declaration of our OnUpdate callback.
-void OnUpdate(void* user_data);
-// Forward declaration of our OnClose callback.
-void OnClose(void* user_data, ULWindow window);
-// Forward declaration of our OnResize callback.
-void OnResize(void* user_data, ULWindow window, unsigned int width, unsigned int height);
-// Forward declaration of our OnDOMReady callback.
-void OnDOMReady(void* user_data, ULView caller, unsigned long long frame_id, bool is_main_frame, ULString url);
 
 void Init() {
   ULSettings settings = ulCreateSettings();
