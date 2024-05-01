@@ -1,12 +1,3 @@
-/***********************************************************************
- * File: game.ts
- * Author: nakumi
- * Create Date: 2024/5/1
- * Editor: nakumi, Gravity cat
- * Update Date: 2024/5/1
- * Description: make the element work on the page
-***********************************************************************/
-
 //create a random number within the range
 function RandomNumber(min: number, max: number) {
   return Math.floor(Math.random() * (max - min) + min);
