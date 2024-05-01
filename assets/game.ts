@@ -2,7 +2,7 @@
  * File: game.ts
  * Author: nakumi
  * Create Date: 2024/5/1
- * Editor: nakumi Gravity cat
+ * Editor: nakumi, Gravity cat
  * Update Date: 2024/5/1
  * Description: make the element work on the page
 ***********************************************************************/
@@ -125,6 +125,7 @@ function Click(row: number, column: number) {
   }
   // API
   ApiClick(row, column);
+  ApiPlayWater();
   DisplayBoard();
   // Check if game is over
   if (IsOver()) {

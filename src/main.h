@@ -91,6 +91,11 @@ JSValueRef ApiPlayBGM(JSContextRef ctx, JSObjectRef function, JSObjectRef thisOb
 // Post: Background music is stopped.
 JSValueRef ApiStopBGM(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception);
 
+// Intent: Plays water music.
+// Pre: The ctx parameter must be a valid JavaScript context. The function and thisObject parameters must be valid JavaScript objects.
+// Post: Water music is stopped.
+JSValueRef ApiPlayWater(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception);
+
 // Intent: Reads a file.
 // Pre: The ctx parameter must be a valid JavaScript context. The function and thisObject parameters must be valid JavaScript objects.
 // Post: File is read.

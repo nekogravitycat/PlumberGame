@@ -145,6 +145,11 @@ JSValueRef ApiStopBGM(JSContextRef ctx, JSObjectRef function, JSObjectRef thisOb
   return JSValueMakeNull(ctx);
 }
 
+JSValueRef ApiPlayWater(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
+  PlaySound(TEXT("./assets/sound/water.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_NOSTOP);
+  return JSValueMakeNull(ctx);
+}
+
 JSValueRef ApiReadFile(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
   game = Game();
   game.fileStartGameCore();
@@ -205,6 +210,11 @@ void OnDOMReady(void* user_data, ULView caller, unsigned long long frame_id,
   // StopBGM
   name = JSStringCreateWithUTF8CString("ApiStopBGM");
   func = JSObjectMakeFunctionWithCallback(ctx, name, ApiStopBGM);
+  JSObjectSetProperty(ctx, JSContextGetGlobalObject(ctx), name, func, 0, 0);
+  JSStringRelease(name);
+  // PlayWater
+  name = JSStringCreateWithUTF8CString("ApiPlayWater");
+  func = JSObjectMakeFunctionWithCallback(ctx, name, ApiPlayWater);
   JSObjectSetProperty(ctx, JSContextGetGlobalObject(ctx), name, func, 0, 0);
   JSStringRelease(name);
   // ReadFile
