@@ -38,6 +38,7 @@ ExternalProject_Add(UltralightSDK
   CONFIGURE_COMMAND ""
   BUILD_COMMAND ""
   INSTALL_COMMAND ""
+  DOWNLOAD_EXTRACT_TIMESTAMP 1
 )
 
 MACRO(ADD_APP source_list)

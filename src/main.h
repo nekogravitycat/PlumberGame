@@ -13,8 +13,7 @@
 #include "Game.h"
 #include <iostream>
 #include <string>
-#include <Windows.h>
-#include <mmsystem.h>
+#include <SFML/Audio.hpp>
 
 // Intent: Initializes the application.
 // Pre: None.
@@ -105,6 +104,11 @@ JSValueRef ApiReadFile(JSContextRef ctx, JSObjectRef function, JSObjectRef thisO
 // Pre: None.
 // Post: Application is shut down.
 void Shutdown();
+
+// Intent: Load sound resources.
+// Pre: None.
+// Post: Sound resources loaded.
+void loadSound();
 
 // Intent: Entry point of the program.
 // Pre: None.

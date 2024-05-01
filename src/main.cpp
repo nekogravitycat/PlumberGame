@@ -8,8 +8,6 @@
 ***********************************************************************/
 #include "main.h"
 
-#pragma comment(lib, "Winmm.lib")
-
 using namespace std;
 
 // Various globals
@@ -18,6 +16,11 @@ ULApp app = 0;
 ULWindow window = 0;
 ULOverlay overlay = 0;
 ULView view = 0;
+// Sound resources
+sf::SoundBuffer* bgmBuffer;
+sf::Sound* bgm;
+sf::SoundBuffer* waterBuffer;
+sf::Sound* water;
 
 void Init() {
   ULSettings settings = ulCreateSettings();
@@ -136,17 +139,18 @@ JSValueRef ApiIsOver(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObj
 }
 
 JSValueRef ApiPlayBGM(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
-  PlaySound(TEXT("./assets/sound/bgm.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+  bgm->setLoop(true);
+  bgm->play();
   return JSValueMakeNull(ctx);
 }
 
 JSValueRef ApiStopBGM(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
-  PlaySound(0, 0, 0);
+  bgm->stop();
   return JSValueMakeNull(ctx);
 }
 
 JSValueRef ApiPlayWater(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) {
-  PlaySound(TEXT("./assets/sound/water.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_NOSTOP);
+  water->play();
   return JSValueMakeNull(ctx);
 }
 
@@ -232,7 +236,22 @@ void Shutdown() {
   ulDestroyApp(app);
 }
 
+void loadSound() {
+  bgmBuffer = new sf::SoundBuffer;
+  bgm = new sf::Sound;
+  if (bgmBuffer->loadFromFile("./assets/sound/bgm.wav")) {
+    bgm->setBuffer(*bgmBuffer);
+  }
+  waterBuffer = new sf::SoundBuffer;
+  water = new sf::Sound;
+  if (waterBuffer->loadFromFile("./assets/sound/water.wav")) {
+    water->setBuffer(*waterBuffer);
+  }
+}
+
 int main() {
+  loadSound();
+  water->play();
   Init();
   ulAppRun(app);
   Shutdown();
