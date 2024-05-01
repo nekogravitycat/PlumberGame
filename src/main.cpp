@@ -239,7 +239,7 @@ void Shutdown() {
 void loadSound() {
   bgmBuffer = new sf::SoundBuffer;
   bgm = new sf::Sound;
-  if (bgmBuffer->loadFromFile("./assets/sound/bgm.wav")) {
+  if (bgmBuffer->loadFromFile("./assets/sound/bgm.mp3")) {
     bgm->setBuffer(*bgmBuffer);
   }
   waterBuffer = new sf::SoundBuffer;
